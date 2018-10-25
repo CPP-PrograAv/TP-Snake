@@ -6,7 +6,7 @@ public abstract class Medida {
 	public static final int LARGO = 500;
 	public static final int BORDE = 100;
 	
-	public static final int SIZE = 20;
+	public static final int SIZE = 10;
 	
 	
 	public static final int NORTE = 1;

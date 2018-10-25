@@ -37,6 +37,7 @@ public class Colision {
 	public static boolean colisiona(Snake snake, Snake snake2) {
 		// colision de cabezas
 		if (snake.getPosition().equals(snake2.getPosition())) {
+			//agregue las direcciones, verificar que las dir para determinar quienes mueren
 			snake.muerto = true;
 			snake2.muerto = true;
 			return true;

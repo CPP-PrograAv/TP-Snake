@@ -52,82 +52,43 @@ public class Escenario extends JFrame {
 		setResizable(false);
 
 		addKeyListener(InputTeclado);
-		// CLASE ANONIMA, MANEJO EVENTOS DE TECLADO
-//		addKeyListener(new KeyListener() {
-//
-//			@Override
-//			public void keyTyped(KeyEvent e) {
-//			}
-//
-//			@Override
-//			public void keyReleased(KeyEvent e) {
-//				if (e.getKeyCode() == KeyEvent.VK_LEFT) 
-//					left = false;
-//				
-//				if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
-//					right = false;
-//				
-//				if (e.getKeyCode() == KeyEvent.VK_UP)
-//					up = false;
-//				if (e.getKeyCode() == KeyEvent.VK_DOWN)
-//					down = false;
-//			}
-//
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					right = false;
-//					left = true;
-//				}
-//				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					right = false;
-//					right = true;
-//				}
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					right = false;
-//					up = true;
-//				}
-//				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					right = false;
-//					down = true;
-//				}
-//			}
-//		});
 
 	}
 
 	public void start() {
+		//preparar escenario
+		/*Crear las serpientes, ubicarlas
+		 * llevar la cuenta de las rondas
+		 * y reempezar la ronda
+		 * */
+		/** Originalmente teniamos agregarSnake(Snake s)*/
 		System.out.println(snake.getIdSnake());
 		System.out.println(snake2.getIdSnake());
 		viboritas.add(snake);
 		viboritas.add(snake2);
 
+		//mientras este en la ronda
 		while (true) {
-
+			//preguntar los movimientos
+			
+			
+			//hago los movimientos
 			move();
-			// re pinto la snake, preguntar por repaint();
 
+			// re pinto la snake, preguntar por repaint();
 			update(this.getGraphics());
 
+			//ajusto los fps
 			try {
 				Thread.sleep(100); // HAGO QUE LOS PROCESOS SE EJECUTEN CADA 100 MILISEGUNDOS
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+	
+ 		
 	}
-
-	private void mostrarmatriz() {
-		// TODO Auto-generated method stub
-		System.out.println("ini:");
-		for (int i = 0; i < ANCHO / size; i++) {
-			for (int j = 0; j < ANCHO / size; j++)
-				System.out.print(matriz[j][i] + " ");
-			System.out.println("\n");
-		}
-		System.out.println("fin");
-	}
-
+	
 	public void paint(Graphics g) {
 		super.paint(g); // VUELVO A PINTAR, Y BORRO EL ANTERIOR
 		Graphics2D g2d = (Graphics2D) g;
@@ -152,7 +113,12 @@ public class Escenario extends JFrame {
 	}
 
 	private void move() {
-
+		//checkeo colisiones
+//		ArrayList<GameObject> muertos = Colision.colisiones();
+		
+		//muevo
+		//foreach
+		
 		if (InputTeclado.direccion == 1 && dy == 0) { // LA SEGUNDA PREGUNTA ES PARA EVITAR QUE VUELVA PARA ATRAS, LA
 														// CABEZA DEBERIA
 			// MOVERSE PARA CUALQUIER LADO?
@@ -212,14 +178,16 @@ public class Escenario extends JFrame {
 
 		}
 
-		// PASAR LOS LIMITES
-		/*
-		 * if(snake.getPosX()==0 && (dx==-1 || dy!=0)) snake.setPosX((ANCHO-size)/size);
-		 * if(snake.getPosY()==0 && (dy==-1 || dx!=0)) snake.setPosY((LARGO-size)/size);
-		 * if(snake.getPosX()==(ANCHO-size)/size && (dx==1 || dy!=0)) snake.setPosX(0);
-		 * if(snake.getPosY()==(LARGO-size)/size && (dy==1 || dx!=0)) snake.setPosY(0);
-		 */
-
+	}
+	
+	private void mostrarmatriz() {
+		System.out.println("ini:");
+		for (int i = 0; i < ANCHO / size; i++) {
+			for (int j = 0; j < ANCHO / size; j++)
+				System.out.print(matriz[j][i] + " ");
+			System.out.println("\n");
+		}
+		System.out.println("fin");
 	}
 
 }

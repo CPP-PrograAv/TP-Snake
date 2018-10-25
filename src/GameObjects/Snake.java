@@ -14,13 +14,22 @@ public class Snake extends GameObject{
 	private int idSnake;
 	public boolean muerto= false;
 	boolean comer=false;
-	int i=0;
+	private int direccion;
+	
 	private ArrayList<Cuerpo> cuerpos = new ArrayList<Cuerpo>();
 	
 	public Snake(int posX, int posY, int id) {
-		
 		super(new Punto(posX,posY),id);
 		cuerpos.add( new Cuerpo( new Punto(posX-1,posY),IDcuerpo));//3, 4, 20, ID
+		idSnake = id;
+		direccion = 0;
+		
+	}
+	
+	public Snake(int posX, int posY, int id, int longitud) {
+		super(new Punto(posX,posY),id);
+		for(int i = 0;i<longitud;i++)
+			cuerpos.add( new Cuerpo( new Punto(posX-i,posY),IDcuerpo));//3, 4, 20, ID
 		idSnake = id;
 		
 	}
@@ -41,9 +50,9 @@ public class Snake extends GameObject{
 		
 		for (int i = cuerpos.size() - 1; i >=0; i--) { 
 	
-			if(i == cuerpos.size()-1 && !comer) 
-				Escenario.matriz[cuerpos.get(i).getPosX()]
-								[cuerpos.get(i).getPosY()] = 0;
+//			if(i == cuerpos.size()-1 && !comer) 
+//				Escenario.matriz[cuerpos.get(i).getPosX()]
+//								[cuerpos.get(i).getPosY()] = 0;
 			if(i>0) 
 				cuerpos.get(i).setPosition(cuerpos.get(i - 1).getPosX(), cuerpos.get(i - 1).getPosY(), ID);	
 			else
@@ -53,6 +62,23 @@ public class Snake extends GameObject{
 
 		setPosition(getPosX()+dx, getPosY()+dy, ID);//creo que mueve la cabeza
 	}
+	
+	public void move() {
+		for (int i = cuerpos.size() - 1; i >=0; i--) { 
+			
+			if(i == cuerpos.size()-1 && !comer) //Que significa? 
+				Escenario.matriz[cuerpos.get(i).getPosX()]
+								[cuerpos.get(i).getPosY()] = 0;
+			if(i>0) 
+				cuerpos.get(i).setPosition(cuerpos.get(i - 1).getPosX(), cuerpos.get(i - 1).getPosY(), ID);	
+			else
+				cuerpos.get(i).setPosition(getPosX(), getPosY(), ID);
+			comer=false;
+		}
+
+//		setPosition(getPosX()+dx, getPosY()+dy, ID);//creo que mueve la cabeza
+	}
+
 
 	public void crecer() {
 		cuerpos.add( new Cuerpo(cuerpos.get(cuerpos.size()-1).getPosition()) ); 	// hago que el cuerpo aparesca afuera de la ventana,

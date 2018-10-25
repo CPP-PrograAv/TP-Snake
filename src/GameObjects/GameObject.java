@@ -39,6 +39,12 @@ public abstract class GameObject{
 		this.ubicacion.setY(posY);
 		Escenario.matriz[posX][posY] = ID;
 	}
+	
+	public void setPosition(Punto p, int ID) {
+		this.ubicacion.setX(p.getX());
+		this.ubicacion.setY(p.getY());
+		Escenario.matriz[p.getX()][p.getY()] = ID;
+	}
 
 	public int getPosX() {
 		return this.ubicacion.getX();
