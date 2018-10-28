@@ -13,88 +13,43 @@ import GameObjects.*;
 import TecladoEvento.InputTeclado;
 import medida.Medida;
 
-public class Escenario extends JFrame {
+public class Escenario extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 
 	 */
+
 	private int ANCHO = Medida.ANCHO;
 	private int LARGO = Medida.LARGO;
-	private int BORDE = Medida.BORDE;
+	private int dy, dx;
+//	private int BORDE = Medida.BORDE;
+	
+	private int size = Medida.SIZE;
 	public static int matriz[][] = new int[Medida.ANCHO / Medida.SIZE][Medida.LARGO / Medida.SIZE];
-
-	public static int size = Medida.SIZE;
-
-	/**
-	 * el ultimo parametro es el Id de la snake, lo hardcodie porque el idgeneral de
-	 * GameObject no incrementaba, como son diferentes, puedo saber cuando se chocan
-	 * snake
-	 */
+	public static ArrayList<Snake> viboritas = new ArrayList<Snake>();
+	
 	Snake snake = new Snake(80 / size, 80 / size, 1);
 	Fruta item = new Fruta();
 	Snake snake2 = new Snake(200 / size, 200 / size, 2);
-	InputTeclado InputTeclado = new InputTeclado();
-	public static ArrayList<Snake> viboritas = new ArrayList<Snake>();
-
-	// movimientos
-	int dy, dx;
-//	boolean up, down, left, right;
-
-	public Escenario() {
-
-		super("Game");
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, ANCHO + BORDE, LARGO + BORDE);
-		setLocationRelativeTo(null);
-		setVisible(true);
-		setResizable(false);
-
-		addKeyListener(InputTeclado);
-
-	}
-
-	public void start() {
-		//preparar escenario
-		/*Crear las serpientes, ubicarlas
-		 * llevar la cuenta de las rondas
-		 * y reempezar la ronda
-		 * */
-		/** Originalmente teniamos agregarSnake(Snake s)*/
-		System.out.println(snake.getIdSnake());
-		System.out.println(snake2.getIdSnake());
-		viboritas.add(snake);
-		viboritas.add(snake2);
-
-		//mientras este en la ronda
-		while (true) {
-			//preguntar los movimientos
-			
-			
-			//hago los movimientos
-			move();
-
-			// re pinto la snake, preguntar por repaint();
-			update(this.getGraphics());
-
-			//ajusto los fps
-			try {
-				Thread.sleep(100); // HAGO QUE LOS PROCESOS SE EJECUTEN CADA 100 MILISEGUNDOS
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	
- 		
+	public Escenario() {		
+		JLabel titulo = new JLabel("AREA DE JUEGO");
+		add(titulo);
+		setBounds(ANCHO/4,0,ANCHO - ANCHO/4,LARGO);
+		setBackground(Color.GRAY);
+	}
+	
+	
+	public void actualizar(int direccion) {
+		
+		move(direccion);
+		update(this.getGraphics());
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g); // VUELVO A PINTAR, Y BORRO EL ANTERIOR
 		Graphics2D g2d = (Graphics2D) g;
-		// g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		// RenderingHints.VALUE_ANTIALIAS_ON); //mejora el dibujo en el tema de los
-		// bordes
 
 		g2d.setColor(Color.RED);
 		snake.paint(g2d);
@@ -106,50 +61,45 @@ public class Escenario extends JFrame {
 		snake2.paint(g2d);
 
 		g2d.setColor(Color.DARK_GRAY);
-		g2d.fillRect(0, 0, ANCHO + BORDE, BORDE / 2);// borde superior
-		g2d.fillRect(ANCHO + BORDE / 2, 0, BORDE / 2, LARGO + BORDE); // borde derecho
-		g2d.fillRect(0, 0, BORDE / 2, LARGO + BORDE); // borde izquierdo
-		g2d.fillRect(0, LARGO + BORDE / 2, ANCHO + BORDE, BORDE / 2);// borde inferior
+//		g2d.fillRect(0, 0, ANCHO + BORDE, BORDE / 2);// borde superior
+//		g2d.fillRect(ANCHO + BORDE / 2, 0, BORDE / 2, LARGO + BORDE); // borde derecho
+//		g2d.fillRect(0, 0, BORDE / 2, LARGO + BORDE); // borde izquierdo
+//		g2d.fillRect(0, LARGO + BORDE / 2, ANCHO + BORDE, BORDE / 2);// borde inferior
 	}
 
-	private void move() {
-		//checkeo colisiones
-//		ArrayList<GameObject> muertos = Colision.colisiones();
+	private void move(int direccion) {
 		
-		//muevo
 		//foreach
 		
-		if (InputTeclado.direccion == 1 && dy == 0) { // LA SEGUNDA PREGUNTA ES PARA EVITAR QUE VUELVA PARA ATRAS, LA
-														// CABEZA DEBERIA
-			// MOVERSE PARA CUALQUIER LADO?
+		if (direccion == 1 && dy == 0) { // LA SEGUNDA PREGUNTA ES PARA EVITAR QUE VUELVA PARA ATRAS, LA CABEZA DEBERIA MOVERSE PARA CUALQUIER LADO?
 			dy = -1;
 			dx = 0;
 		}
 
-		if (InputTeclado.direccion == 3 && dy == 0) {
+		if (direccion == 3 && dy == 0) {
 			dy = 1;
 			dx = 0;
 		}
 
-		if (InputTeclado.direccion == 4 && dx == 0) {
+		if (direccion == 4 && dx == 0) {
 			dx = -1;
 			dy = 0;
 		}
 
-		if (InputTeclado.direccion == 2 && dx == 0) {
+		if (direccion == 2 && dx == 0) {
 			dx = 1;
 			dy = 0;
 		}
 
 		// PASAR LOS LIMITES
-		if (snake.getPosX() == 0 && (dx == -1 || dy != 0))
-			snake.setPosX((ANCHO - size) / size);
-		if (snake.getPosY() == 0 && (dy == -1 || dx != 0))
-			snake.setPosY((LARGO - size) / size);
-		if (snake.getPosX() == (ANCHO - size) / size && (dx == 1 || dy != 0))
-			snake.setPosX(0);
-		if (snake.getPosY() == (LARGO - size) / size && (dy == 1 || dx != 0))
-			snake.setPosY(0);
+//		if (snake.getPosX() == 0 && (dx == -1 || dy != 0))
+//			snake.setPosX((ANCHO - size) / size);
+//		if (snake.getPosY() == 0 && (dy == -1 || dx != 0))
+//			snake.setPosY((LARGO - size) / size);
+//		if (snake.getPosX() == (ANCHO - size) / size && (dx == 1 || dy != 0))
+//			snake.setPosX(0);
+//		if (snake.getPosY() == (LARGO - size) / size && (dy == 1 || dx != 0))
+//			snake.setPosY(0);
 
 		if (dx != 0 || dy != 0)
 			snake.move(dx, dy);
@@ -161,7 +111,7 @@ public class Escenario extends JFrame {
 		// for con array de item
 		if (Colision.colisiona(snake, item)) {
 		}
-
+		
 		if (snake.muerto) {
 			System.out.println("Muerto" + snake.getIdSnake());
 			if (snake2.muerto)

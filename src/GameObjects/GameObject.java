@@ -6,10 +6,6 @@ import base.*;
 
 public abstract class GameObject{
 
-	/**
-	 * 
-	 */
-
 	private Punto ubicacion;
 	private int size;
 	protected static int idgeneral = 0;

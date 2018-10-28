@@ -6,14 +6,10 @@ import medida.*;
 
 public class Fruta extends GameObject {
 
-
-	
 	public static int IdItem = -1;
 
-	public Fruta() {
-		
+	public Fruta() {		
 		super(ubicar(), IdItem);
-				
 		System.out.println("Fruta en X: "+getPosX()+" e Y: "+getPosY());
 	}
 
@@ -22,23 +18,23 @@ public class Fruta extends GameObject {
 	}
 
 	public void setItem() {
-		
-		Escenario.matriz[getPosX()][getPosY()] = 0;
+		Escenario.matriz[getPosX()][getPosY()] = 0; 
 		// Acá se debería verificar que no se superponga a la snake o a un powerup
 		setPosition(ubicar(), IdItem);
 		System.out.println("Fruta en X: " + getPosX() + " e Y: " + getPosY());
 	}
 
-
 	@Override
 	public void paint(Graphics2D g2d) {
 		g2d.setColor(Color.GREEN);
-		int padding = Medida.BORDE/2;
+//		int padding = Medida.BORDE/2;
+		int padding = 0;
 		g2d.fillRect(this.getPosX() * Medida.SIZE + 1 + padding, 
 				this.getPosY() * Medida.SIZE + 1 + padding, Medida.SIZE-2,
 				Medida.SIZE-2);
 
 	}
+	
 	/**
 	 * Genera un punto al azar donde la matriz del escenario no contiene nada
 	 * WARNING: si no hay lugar me quedo trabado
@@ -52,5 +48,4 @@ public class Fruta extends GameObject {
 		}while(Escenario.matriz[p1.getX()][p1.getY()]!=0); //si no hay lugar me quedo trabado
 		return p1;
 	}
-
 }

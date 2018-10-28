@@ -14,22 +14,22 @@ public class InputTeclado implements KeyListener{
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			direccion = Medida.OESTE;
-		//	System.out.println("Entro LEFT");
+//			System.out.println("Entro LEFT");
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			direccion = Medida.ESTE;
-		//	System.out.println("Entro RIGHT");
+//			System.out.println("Entro RIGHT");
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			direccion = Medida.NORTE;
-		//	System.out.println("Entro UP");	
+//			System.out.println("Entro UP");	
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			direccion = Medida.SUR;
-		//	System.out.println("Entro DOWN");
+//			System.out.println("Entro DOWN");
 		}
 		
 	}

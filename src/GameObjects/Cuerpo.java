@@ -12,9 +12,10 @@ public class Cuerpo extends GameObject{
 	}
 	
 	public Cuerpo(Punto punto) {
-		super(new Punto(punto.getX()-1,punto.getY()),99);
-		Escenario.matriz[punto.getX()-1][punto.getY()]=0;
+		super(new Punto(punto.getX(),punto.getY()),99);
+		Escenario.matriz[punto.getX()][punto.getY()]=0;
 	}
+	
 	public Cuerpo(Punto ubicacion, int id) {
 		super(ubicacion, id);		
 	}
@@ -23,16 +24,15 @@ public class Cuerpo extends GameObject{
 		super(new Punto(x,y),1);
 	}
 	
-	
 	public Punto getUbicacion() {
 		return this.ubicacion;
 	}
-
 	
 	@Override
 	public void paint(Graphics2D g2d) {
 		g2d.setColor(Color.BLACK);
-		int padding = Medida.BORDE/2;
+//		int padding = Medida.BORDE/2;
+		int padding = 0;
 		g2d.fillRect(this.getPosX() * Medida.SIZE + 1+ padding, 
 				this.getPosY() * Medida.SIZE  + 1 + padding, Medida.SIZE -2,
 				Medida.SIZE-2);

@@ -33,8 +33,6 @@ public class Punto {
 	public void setY(int y) {
 		this.y = y;
 	}
-
-	
 	
 	@Override
 	public int hashCode() {
@@ -60,7 +58,4 @@ public class Punto {
 			return false;
 		return true;
 	}
-
-	
-	
 }
