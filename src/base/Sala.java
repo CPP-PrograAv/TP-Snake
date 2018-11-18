@@ -25,6 +25,7 @@ public class Sala extends JFrame implements Runnable {
 	private JList<String> lista;
 	private JScrollPane scroll;
 	private Persona persona;
+	
 	public Sala(Persona persona) {
 		super("Game");
 		
@@ -142,7 +143,7 @@ public class Sala extends JFrame implements Runnable {
 		return model;
 	}
 
-	public String alinearCadenas(String cadena) {
+	private String alinearCadenas(String cadena) {
 
 		String cadenita = cadena.trim(), res;
 		String[] cadenas = cadenita.split(" ");

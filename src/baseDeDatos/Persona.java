@@ -8,6 +8,16 @@ public class Persona {
 	private String contraseña;
 	private String color;
 
+	
+	public Persona(int idPersona, String nick, String color) {
+		this.idPersona = idPersona;
+		this.nick = nick;
+		this.color = color;
+	}
+	
+	public Persona() {
+	}
+
 	public int getIdPersona() {
 		return idPersona;
 	}

@@ -11,41 +11,38 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import base.Sala;
 
-
-
 public class Bienvenida extends JFrame {
 
-	JButton boton1, boton2;
-	JLabel label1;
+	JButton btnSinglePlayer, btnMultiPlayer;
+	JLabel lblTitulo;
 
 	public Bienvenida() {
 
 		setLayout(null);
-		boton1 = new JButton("single player");
-		boton2 = new JButton("multiplayer");
-		label1 = new JLabel("Slither.IO");
+		btnSinglePlayer = new JButton("Single Player");
+		btnMultiPlayer = new JButton("Multiplayer");
+		lblTitulo = new JLabel("Slither.IO");
 		this.setTitle("Bienvenida");
 
-		boton1.setBounds(170, 150, 120, 30);
-		boton2.setBounds(170, 250, 120, 30);
-		label1.setBounds(190, 50, 120, 50);
+		btnSinglePlayer.setBounds(170, 150, 120, 30);
+		btnMultiPlayer.setBounds(170, 250, 120, 30);
+		lblTitulo.setBounds(190, 50, 120, 50);
 
-		label1.setFont(new Font("Andale Mono", 1, 20));
-		label1.setForeground(Color.BLACK);
+		lblTitulo.setFont(new Font("Andale Mono", 1, 20));
+		lblTitulo.setForeground(Color.BLACK);
 
 		setBounds(0, 0, 500, 500);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		setVisible(true);
 
-		add(boton1);
-		add(boton2);
-		add(label1);
+		add(btnSinglePlayer);
+		add(btnMultiPlayer);
+		add(lblTitulo);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -54,21 +51,17 @@ public class Bienvenida extends JFrame {
 			}
 		});
 		
-		boton1.addActionListener(new ActionListener() {
+		btnSinglePlayer.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				setVisible(false);
-				Sala sala = new Sala(null);
+				Sala sala = new Sala(new Persona(1,"Jugador","Azul"));
 				new Thread(sala).start();
-			
-				
-				
-				
 			}
 		});
-		boton2.addActionListener(new ActionListener() {
+		
+		btnMultiPlayer.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -90,7 +83,6 @@ public class Bienvenida extends JFrame {
 
 	public static void main(String[] args) {
 		Bienvenida ventanaLoggin = new Bienvenida();
-		
 	}
 
 }
