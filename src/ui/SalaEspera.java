@@ -1,4 +1,4 @@
-package lobby;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import javax.swing.*;
 
-import base.Sala;
+import base.Juego;
 import baseDeDatos.Persona;
 
 public class SalaEspera extends JFrame{
@@ -25,7 +25,7 @@ public class SalaEspera extends JFrame{
 	public SalaEspera(String nombreSala,Persona persona) {
 		
 		
-		super("Sala Espera");
+		super("Juego Espera");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 300);
@@ -43,8 +43,8 @@ public class SalaEspera extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Sala sala = new Sala(persona);
-				new Thread(sala).start();
+				Juego juego = new Juego(persona);
+				new Thread(juego).start();
 			}
 		});
 		

@@ -1,4 +1,4 @@
-package baseDeDatos;
+package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,23 +7,29 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import baseDeDatos.Login;
+import baseDeDatos.Registro;
 
 public class Multiplayer extends JFrame {
 
-	private JButton boton1, boton2;
-
+	private JButton btnLogIn, btnRegister;
+	JTextField txtMail, txtPassword;
+	JLabel lblCorreo, lblPassword;
 	public Multiplayer() {
 
 		this.setTitle("Multiplayer");
 		setLayout(null);
-		boton1 = new JButton("Iniciar sesion");
-		boton2 = new JButton("Registrarse");
+		btnLogIn = new JButton("Iniciar sesion");
+		btnRegister = new JButton("Registrarse");
 
 		setBounds(0, 0, 500, 500);
-		boton1.setBounds(175, 200, 110, 30);
-		boton2.setBounds(175, 250, 110, 30);
-		add(boton1);
-		add(boton2);
+		btnLogIn.setBounds(175, 200, 110, 30);
+		btnRegister.setBounds(175, 250, 110, 30);
+		add(btnLogIn);
+		add(btnRegister);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setVisible(true);
@@ -35,7 +41,7 @@ public class Multiplayer extends JFrame {
 				setVisible(false);
 			}
 		});
-		boton1.addActionListener(new ActionListener() {
+		btnLogIn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -44,7 +50,7 @@ public class Multiplayer extends JFrame {
 			}
 		});
 
-		boton2.addActionListener(new ActionListener() {
+		btnRegister.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -57,7 +63,6 @@ public class Multiplayer extends JFrame {
 	}
 
 	public static void main(String[] args) {
-
 		Multiplayer mp = new Multiplayer();
 	}
 }

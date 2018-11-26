@@ -1,9 +1,8 @@
-package base;
+package cliente;
 
 import ui.Bienvenida;
 
-public class MainGame {
-	
+public class MainCliente {
 	public static void main(String[] args) {
 		Bienvenida bienvenida = new Bienvenida();
 	}

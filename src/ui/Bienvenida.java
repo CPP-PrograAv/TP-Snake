@@ -1,4 +1,4 @@
-	package baseDeDatos;
+	package ui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,7 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import base.Sala;
+import base.Juego;
+import baseDeDatos.Persona;
 
 public class Bienvenida extends JFrame {
 
@@ -56,8 +57,8 @@ public class Bienvenida extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Sala sala = new Sala(new Persona(1,"Jugador","Azul"));
-				new Thread(sala).start();
+				Juego juego = new Juego(new Persona(1,"Jugador","Azul"));
+				new Thread(juego).start();
 			}
 		});
 		
@@ -82,7 +83,7 @@ public class Bienvenida extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Bienvenida ventanaLoggin = new Bienvenida();
+		Bienvenida bienvenida = new Bienvenida();
 	}
 
 }

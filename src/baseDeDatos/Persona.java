@@ -1,13 +1,11 @@
 package baseDeDatos;
 
 public class Persona {
-	
 	private int idPersona;
 	private String nick;
 	private String mail;
 	private String contraseña;
 	private String color;
-
 	
 	public Persona(int idPersona, String nick, String color) {
 		this.idPersona = idPersona;
@@ -16,6 +14,14 @@ public class Persona {
 	}
 	
 	public Persona() {
+	}
+	
+	public Persona(int idPersona, String nick, String mail, String contraseña, String color) {
+		this.idPersona = idPersona;
+		this.nick = nick;
+		this.mail = mail;
+		this.contraseña = contraseña;
+		this.color = color;
 	}
 
 	public int getIdPersona() {

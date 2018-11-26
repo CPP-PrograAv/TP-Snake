@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import ui.Multiplayer;
+
 public class Registro extends JFrame {
 
 	JTextField textField1, textField2, textField3, textField4;

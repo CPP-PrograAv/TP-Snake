@@ -1,4 +1,4 @@
-package lobby;
+package ui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,25 +8,18 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import base.Sala;
+import base.Juego;
 import baseDeDatos.Persona;
 
 public class Lobby extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JButton crearSala;
 	private JTable tablaDeSalas;
 	private JButton accesoRapido, salir, unirse;
 	private JPanel panel1,panel2;
-	private JScrollPane scroll ;
-	
+	private JScrollPane scroll;
 	
 	public Lobby(Persona persona) {
-		
-
 		super("-- Lobby --");
 		String[] encabezado = { "#", "Titulo del Juego", "Players" };
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +28,7 @@ public class Lobby extends JFrame {
 
 		this.setLayout(new BorderLayout());
 
-		crearSala = new JButton("Crear Sala");
+		crearSala = new JButton("Crear Juego");
 		accesoRapido = new JButton("Unirse Rapido");
 		salir = new JButton("Salir");
 		unirse = new JButton("Unirse");
@@ -124,7 +117,9 @@ public class Lobby extends JFrame {
 		
 	}
 	
-
+	public static void main(String[] args) {
+		new Lobby(new Persona(1, "Juan", "Azul"));
+	}
 	
 
 }

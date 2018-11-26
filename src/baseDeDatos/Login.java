@@ -14,7 +14,8 @@ import javax.swing.JTextField;
 
 import org.hibernate.cfg.annotations.ListBinder;
 
-import lobby.Lobby;
+import ui.Lobby;
+import ui.Multiplayer;
 
 import java.util.List;
 import java.util.regex.Matcher;

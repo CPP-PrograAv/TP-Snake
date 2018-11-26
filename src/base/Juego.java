@@ -8,7 +8,7 @@ import TecladoEvento.InputTeclado;
 import baseDeDatos.Persona;
 import medida.Medida;
 
-public class Sala extends JFrame implements Runnable {
+public class Juego extends JFrame implements Runnable {
 
 	private int ANCHO = Medida.ANCHO;
 
@@ -26,7 +26,7 @@ public class Sala extends JFrame implements Runnable {
 	private JScrollPane scroll;
 	private Persona persona;
 	
-	public Sala(Persona persona) {
+	public Juego(Persona persona) {
 		super("Game");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
