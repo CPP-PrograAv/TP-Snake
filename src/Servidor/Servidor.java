@@ -70,10 +70,11 @@ public class Servidor implements Runnable {
 
 				case Parametro.NUEVASALA:
 					persona = (Persona) paqueteDatos.getDato();
-					vSalaEspera.add(new SalaEspera(paqueteDatos.getCadena(), persona));
+					SalaEspera sala=new SalaEspera(paqueteDatos.getCadena(), persona);
+					vSalaEspera.add(sala);
 					vJugador.add(new Jugador(persona.getNick()));
 					salida.flush();
-					salida.writeBoolean(true);
+					salida.writeObject(sala);
 					entrada.close();
 					break;
 

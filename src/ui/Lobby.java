@@ -19,13 +19,12 @@ public class Lobby extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JButton crearSala;
 	private JTable tablaDeSalas;
-	private JButton  unirse;
+	private JButton unirse;
 	private JPanel panel1, panel2;
 	private JScrollPane scroll;
-	private ArrayList<SalaEspera> vSalas;
-	boolean bandera=false;
-	DefaultTableModel model;
-	
+	private ArrayList<SalaEspera> vSalas = new ArrayList<SalaEspera>();
+	private DefaultTableModel model;
+
 	public Lobby(Persona persona) {
 		super("-- Lobby --");
 		String[] encabezado = { "#", "Titulo del Juego", "Players" };
@@ -35,14 +34,6 @@ public class Lobby extends JFrame {
 
 		this.setLayout(new BorderLayout());
 
-		if(!bandera) {
-			vSalas = new ArrayList<SalaEspera>();
-			bandera=true;
-		}else {
-			vSalas=this.getvSalas();
-			for(SalaEspera i : vSalas)
-				model.addRow(i.getList());
-		}
 		crearSala = new JButton("Crear Sala");
 		unirse = new JButton("Unirse");
 
@@ -71,16 +62,13 @@ public class Lobby extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int filaSeleccionada = tablaDeSalas.getSelectedRow();
-/*
-				if (filaSeleccionada == -1)
-					return;*/
+				/*
+				 * if (filaSeleccionada == -1) return;
+				 */
 				SalaEspera salaEspera = null;
 				Jugador jugador = new Jugador(persona.getNick());
-				salaEspera.setvJugadorSala(jugador,filaSeleccionada);
-
-				
 
 			}
 		});
@@ -89,28 +77,18 @@ public class Lobby extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean bandera=false;
-				
+
 				String nombreSala = "";
 				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
-				
+
 				Sala salaIntermedia = new Sala();
 				Conexion conexion = new Conexion();
-				bandera=conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona,nombreSala));
-				
-				if(bandera)
-					System.out.println("se creo correctamente");
-				else
-					System.out.println("fallo");
-			 //   model = (DefaultTableModel) tablaDeSalas.getModel();
-				//model.addRow(sala.getList());
-				
-				
-				/*if (sala.getCantJugadores() == 0) {
-					model.removeRow(tablaDeSalas.getRowCount() - 1);
-				}
+				SalaEspera sala = conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona, nombreSala));
+
+				model = (DefaultTableModel) tablaDeSalas.getModel();
+				model.addRow(sala.getList());
 				model.fireTableDataChanged();
-*/
+
 			}
 		});
 
@@ -122,6 +100,7 @@ public class Lobby extends JFrame {
 		setVisible(true);
 
 	}
+
 	public ArrayList<SalaEspera> getvSalas() {
 		return vSalas;
 	}

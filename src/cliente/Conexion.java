@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import baseDeDatos.Persona;
 import medida.*;
 import ui.Sala;
+import ui.SalaEspera;
 
-public class Conexion{
+public class Conexion {
 
 	private ObjectOutputStream salida;
 	private ObjectInputStream entrada;
@@ -17,9 +18,9 @@ public class Conexion{
 	private Socket socketOut;
 
 	public Conexion() {
-		
+
 		try {
-			socket = new Socket("localhost",Parametro.PUERTO1);
+			socket = new Socket("localhost", Parametro.PUERTO1);
 			socketOut = new Socket("localhost", Parametro.PUERTO2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -30,17 +31,17 @@ public class Conexion{
 	public Persona loguear(Mensaje paqueteDatos) {
 
 		try {
-					
+
 			salida = new ObjectOutputStream(this.socket.getOutputStream());
 			salida.flush();
-			salida.writeObject(paqueteDatos); //mando msj
+			salida.writeObject(paqueteDatos); // mando msj
 //			socket.close();
-			
+
 			entrada = new ObjectInputStream(socketOut.getInputStream());
 			Persona per = (Persona) entrada.readObject();
-			
+
 			return per;
-			
+
 //			return persona;
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -50,21 +51,23 @@ public class Conexion{
 
 	}
 
-public  boolean crearSala(Mensaje paqueteDatos) {
-	
-	try {
-		salida = new ObjectOutputStream(this.socket.getOutputStream());
-		salida.flush();
-		salida.writeObject(paqueteDatos);
-		entrada = new ObjectInputStream(socketOut.getInputStream());
-		return 	entrada.readBoolean();
-		
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	public SalaEspera crearSala(Mensaje paqueteDatos) {
+
+		try {
+
+			salida = new ObjectOutputStream(this.socket.getOutputStream());
+			salida.flush();
+			salida.writeObject(paqueteDatos);
+			entrada = new ObjectInputStream(socketOut.getInputStream());
+			SalaEspera Sala = (SalaEspera) entrada.readObject();
+			return  Sala;
+
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
 	}
-	return false;
-	
-}
 
 }
