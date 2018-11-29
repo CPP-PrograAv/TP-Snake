@@ -20,8 +20,6 @@ public abstract class Medida {
 	public static final int OESTE = -2; // Oeste y Este deben ser opuestos
 	public static final int ESTE = 2;
 
-	public static final int PUERTO1 = 10000;
-	public static final int PUERTO2 = 9002;
 
 	
 }

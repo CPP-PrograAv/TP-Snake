@@ -1,17 +1,12 @@
 package Servidor;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.List;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
-import TecladoEvento.InputTeclado;
-import base.DAOServidor;
-import base.Tablero;
+import base.*;
 import baseDeDatos.Persona;
-import medida.Medida;
+import medida.*;
 
 public class Servidor implements Runnable {
 
@@ -33,8 +28,8 @@ public class Servidor implements Runnable {
 	public void run() {
 
 		try {
-			ServerSocket servidorIn = new ServerSocket(Medida.PUERTO1);
-			ServerSocket servidorOut = new ServerSocket(Medida.PUERTO2);
+			ServerSocket servidorIn = new ServerSocket(Parametro.PUERTO1);
+			ServerSocket servidorOut = new ServerSocket(Parametro.PUERTO2);
 
 			while (true) {
 
@@ -56,9 +51,7 @@ public class Servidor implements Runnable {
 					perAux.setMail(persona2.get(0)[0].toString());
 					perAux.setContraseña(persona2.get(0)[1].toString());
 					perAux.setNick(persona2.get(0)[2].toString());
-					
 				}
-				
 
 				salida.flush();
 				salida.writeObject(perAux);

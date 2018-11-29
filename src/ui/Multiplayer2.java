@@ -109,7 +109,6 @@ public class Multiplayer2 extends JFrame {
 		lblPassword = new JLabel("Ingrese su contrase\u00F1a");
 		btnLogIn = new JButton("Iniciar Sesi\u00F3n");
 		btnLogIn.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				if(txtCorreo.getText().isEmpty()||txtPassword.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Ingrese el correo y la contraseña", "Error", JOptionPane.ERROR_MESSAGE);

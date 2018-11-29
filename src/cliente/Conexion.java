@@ -1,15 +1,10 @@
 package cliente;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.io.*;
+import java.net.*;
 
 import baseDeDatos.Persona;
-import medida.Medida;
+import medida.*;
 
 public class Conexion{
 
@@ -22,8 +17,8 @@ public class Conexion{
 	public Conexion() {
 		
 		try {
-			socket = new Socket("localhost", Medida.PUERTO1);
-			socketOut = new Socket("localhost", Medida.PUERTO2);
+			socket = new Socket("localhost",Parametro.PUERTO1);
+			socketOut = new Socket("localhost", Parametro.PUERTO2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
