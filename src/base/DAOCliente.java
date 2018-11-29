@@ -19,5 +19,10 @@ public class DAOCliente extends DAO{
 		p.setColor("Azul");
 		return (List<Object[]>) p;
 	}
+	@Override
+	public int realizarRegistro(Persona persona) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

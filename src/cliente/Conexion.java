@@ -60,7 +60,7 @@ public class Conexion {
 			salida.writeObject(paqueteDatos);
 			entrada = new ObjectInputStream(socketOut.getInputStream());
 			SalaEspera Sala = (SalaEspera) entrada.readObject();
-			return  Sala;
+			return Sala;
 
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -68,6 +68,25 @@ public class Conexion {
 		}
 		return null;
 
+	}
+
+	public int registrarse(Mensaje paqueteDatos) {
+
+		int resp = 0;
+		try {
+
+			salida = new ObjectOutputStream(this.socket.getOutputStream());
+			salida.flush();
+			salida.writeObject(paqueteDatos);
+
+			entrada = new ObjectInputStream(socketOut.getInputStream());
+			resp = (int) entrada.readObject();
+			return resp;
+
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return resp;
 	}
 
 }

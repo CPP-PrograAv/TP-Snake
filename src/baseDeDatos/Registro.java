@@ -7,15 +7,10 @@ import java.awt.event.WindowEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
+import cliente.*;
+import medida.*;
 import ui.Multiplayer;
 
 public class Registro extends JFrame {
@@ -89,9 +84,20 @@ public class Registro extends JFrame {
 				if (textField1.getText().equals("") || textField2.getText().equals("")|| textField3.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
 				} else {
-					ConsultaBBDD.insert(persona);
-					Login login = new Login();
-					setVisible(false);
+					Conexion conexion = new Conexion();
+					System.out.println("ENTRO");
+					int resp = conexion.registrarse(new Mensaje(Parametro.REGISTRARSE, persona));
+
+					if (resp == Parametro.CAMPOS_VACIOS)
+						JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+					else if (resp == Parametro.CORREO_INVALIDO)
+						JOptionPane.showMessageDialog(null,
+								"El email ingresado es invalido.verifique su email e ingreselo nuevamente");
+					else {
+						JOptionPane.showMessageDialog(null, "Se genero el registro con éxito!");
+						Login login = new Login();
+						setVisible(false);
+					}
 					}
 				}
 			}

@@ -70,12 +70,23 @@ public class Servidor implements Runnable {
 
 				case Parametro.NUEVASALA:
 					persona = (Persona) paqueteDatos.getDato();
-					SalaEspera sala=new SalaEspera(paqueteDatos.getCadena(), persona);
+					SalaEspera sala = new SalaEspera(paqueteDatos.getCadena(), persona);
 					vSalaEspera.add(sala);
 					vJugador.add(new Jugador(persona.getNick()));
 					salida.flush();
 					salida.writeObject(sala);
 					entrada.close();
+					break;
+					
+				case Parametro.REGISTRARSE:
+					persona = (Persona) paqueteDatos.getDato();
+					DAOServidor server = new DAOServidor();
+					int respuesta = server.realizarRegistro(persona);
+
+					salida.flush();
+					salida.writeObject(respuesta);
+					entrada.close();
+
 					break;
 
 				default:
