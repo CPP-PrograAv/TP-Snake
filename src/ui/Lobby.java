@@ -58,6 +58,16 @@ public class Lobby extends JFrame {
 		scroll = new JScrollPane(tablaDeSalas);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+		// Actualiza Lobby
+		Conexion conexion = new Conexion();
+		vSalas = conexion.actualizarLobby(new Mensaje(Parametro.ACTUALIZAR_LOBBY));
+		
+		model = (DefaultTableModel) tablaDeSalas.getModel();
+
+		for (SalaEspera s : vSalas)
+			model.addRow(s.getList());
+		model.fireTableDataChanged();
+
 		unirse.addActionListener(new ActionListener() {
 
 			@Override
@@ -108,4 +118,5 @@ public class Lobby extends JFrame {
 	public void setvSalas(ArrayList<SalaEspera> vSalas) {
 		this.vSalas = vSalas;
 	}
+
 }

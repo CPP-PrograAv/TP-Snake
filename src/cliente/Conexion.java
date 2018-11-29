@@ -88,5 +88,26 @@ public class Conexion {
 		}
 		return resp;
 	}
+	
+	public ArrayList<SalaEspera> actualizarLobby(Mensaje paqueteDatos){
+		
+		
+		try {
+			salida = new ObjectOutputStream(this.socket.getOutputStream());
+			salida.flush();
+			salida.writeObject(paqueteDatos);
+			
+			entrada = new ObjectInputStream(socketOut.getInputStream());
+			return (ArrayList<SalaEspera>) entrada.readObject();
+			
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return null;
+	}
 
 }

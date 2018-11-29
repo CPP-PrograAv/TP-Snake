@@ -88,7 +88,17 @@ public class Servidor implements Runnable {
 					entrada.close();
 
 					break;
-
+					
+				case Parametro.ACTUALIZAR_LOBBY:
+					
+					ArrayList<SalaEspera> salas = this.getvSalaEspera();
+					salida.flush();
+					salida.writeObject(salas);
+					
+					entrada.close();
+					
+					
+					break;
 				default:
 					break;
 				}
@@ -109,5 +119,15 @@ public class Servidor implements Runnable {
 
 		Servidor servidor = new Servidor();
 	}
+
+	public ArrayList<SalaEspera> getvSalaEspera() {
+		return vSalaEspera;
+	}
+
+	public void setvSalaEspera(ArrayList<SalaEspera> vSalaEspera) {
+		this.vSalaEspera = vSalaEspera;
+	}
+	
+	
 
 }

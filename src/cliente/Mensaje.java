@@ -8,6 +8,12 @@ public class Mensaje implements Serializable {
 	private Object dato;
 	private String cadena;
 
+	public Mensaje(int cod) {
+		this.cod = cod;
+	}
+
+	
+	
 	public Mensaje(int cod, Object dato) {
 
 		this.cod = cod;

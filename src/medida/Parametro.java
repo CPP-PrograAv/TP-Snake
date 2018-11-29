@@ -7,7 +7,7 @@ public class Parametro {
 
 	public static final int LOGGEO = 1;
 	public static final int REGISTRARSE = 2;
-	public static final int DAMESALAS = 3;
+	public static final int ACTUALIZAR_LOBBY = 3;
 	public static final int NUEVASALA = 4;
 	public static final int UNIRSE = 5;
 	
