@@ -19,7 +19,7 @@ public class Lobby extends JFrame {
 	private JButton  unirse;
 	private JPanel panel1, panel2;
 	private JScrollPane scroll;
-	private ArrayList<SalaEspera>vSalas;
+	private ArrayList<SalaEspera> vSalas;
 	boolean bandera=false;
 	DefaultTableModel model;
 	
