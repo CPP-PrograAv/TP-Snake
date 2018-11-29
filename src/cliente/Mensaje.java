@@ -6,11 +6,19 @@ public class Mensaje implements Serializable {
 
 	private int cod;
 	private Object dato;
-	
+	private String cadena;
+
 	public Mensaje(int cod, Object dato) {
-		
+
 		this.cod = cod;
 		this.dato = dato;
+	}
+
+	public Mensaje(int cod, Object dato, String cadena) {
+
+		this.cod = cod;
+		this.dato = dato;
+		this.cadena = cadena;
 	}
 
 	public int getCod() {
@@ -28,6 +36,13 @@ public class Mensaje implements Serializable {
 	public void setDato(Object dato) {
 		this.dato = dato;
 	}
-	
-	
+
+	public String getCadena() {
+		return cadena;
+	}
+
+	public void setCadena(String cadena) {
+		this.cadena = cadena;
+	}
+
 }

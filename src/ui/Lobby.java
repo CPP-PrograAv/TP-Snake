@@ -11,6 +11,9 @@ import javax.swing.table.DefaultTableModel;
 import base.Juego;
 import base.Jugador;
 import baseDeDatos.Persona;
+import cliente.Conexion;
+import cliente.Mensaje;
+import medida.Parametro;
 
 public class Lobby extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -86,19 +89,28 @@ public class Lobby extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean bandera=false;
+				
 				String nombreSala = "";
 				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
-
-				SalaEspera sala = new SalaEspera(nombreSala, persona);
-			    model = (DefaultTableModel) tablaDeSalas.getModel();
-				model.addRow(sala.getList());
-				vSalas.add(sala);
 				
-				if (sala.getCantJugadores() == 0) {
+				Sala salaIntermedia = new Sala();
+				Conexion conexion = new Conexion();
+				bandera=conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona,nombreSala));
+				
+				if(bandera)
+					System.out.println("se creo correctamente");
+				else
+					System.out.println("fallo");
+			 //   model = (DefaultTableModel) tablaDeSalas.getModel();
+				//model.addRow(sala.getList());
+				
+				
+				/*if (sala.getCantJugadores() == 0) {
 					model.removeRow(tablaDeSalas.getRowCount() - 1);
 				}
 				model.fireTableDataChanged();
-
+*/
 			}
 		});
 

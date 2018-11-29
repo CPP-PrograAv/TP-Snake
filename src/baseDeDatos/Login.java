@@ -18,7 +18,8 @@ import javax.swing.JTextField;
 import org.hibernate.cfg.annotations.ListBinder;
 
 import cliente.Conexion;
-
+import cliente.Mensaje;
+import medida.Parametro;
 import ui.Lobby;
 import ui.Multiplayer;
 
@@ -85,7 +86,7 @@ public class Login extends JFrame {
 				 else {
 					Conexion conexion = new Conexion();
 					Persona resp = new Persona();
-					resp= conexion.loguear(persona);
+					resp= conexion.loguear(new Mensaje(Parametro.LOGGEO, persona));
 					if(resp.getNick()!=null) {
 						
 						setVisible(false);

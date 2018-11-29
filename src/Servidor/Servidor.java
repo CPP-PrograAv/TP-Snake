@@ -6,7 +6,9 @@ import java.util.*;
 
 import base.*;
 import baseDeDatos.Persona;
+import cliente.Mensaje;
 import medida.*;
+import ui.SalaEspera;
 
 public class Servidor implements Runnable {
 
@@ -18,6 +20,10 @@ public class Servidor implements Runnable {
 	private Persona persona;
 	private ServerSocket servidor;
 	private Persona perAux;
+	private Mensaje paqueteDatos;
+	private ArrayList<SalaEspera> vSalaEspera = new ArrayList<SalaEspera>();
+	private ArrayList<Jugador> vJugador = new ArrayList<Jugador>();
+
 	public Servidor() {
 
 		Thread hilo = new Thread(this);
@@ -40,23 +46,40 @@ public class Servidor implements Runnable {
 				entrada = new ObjectInputStream(cliente.getInputStream());
 				salida = new ObjectOutputStream(clienteOut.getOutputStream());
 
-				persona = (Persona) entrada.readObject();
+				paqueteDatos = (Mensaje) entrada.readObject();
 
-				DAOServidor daoserver = new DAOServidor();
-				List<Object[]> persona2 = daoserver.realizarLogin(persona);
+				switch (paqueteDatos.getCod()) {
+				case Parametro.LOGGEO:
+					persona = (Persona) paqueteDatos.getDato();
+					DAOServidor daoserver = new DAOServidor();
+					List<Object[]> persona2 = daoserver.realizarLogin(persona);
 
-				perAux = new Persona();
-				
-				if(persona2.size()==1) {
-					perAux.setMail(persona2.get(0)[0].toString());
-					perAux.setContraseña(persona2.get(0)[1].toString());
-					perAux.setNick(persona2.get(0)[2].toString());
+					perAux = new Persona();
+
+					if (persona2.size() == 1) {
+						perAux.setMail(persona2.get(0)[0].toString());
+						perAux.setContraseña(persona2.get(0)[1].toString());
+						perAux.setNick(persona2.get(0)[2].toString());
+					}
+					salida.flush();
+					salida.writeObject(perAux);
+
+					entrada.close();
+
+					break;
+
+				case Parametro.NUEVASALA:
+					persona = (Persona) paqueteDatos.getDato();
+					vSalaEspera.add(new SalaEspera(paqueteDatos.getCadena(), persona));
+					vJugador.add(new Jugador(persona.getNick()));
+					salida.flush();
+					salida.writeBoolean(true);
+					entrada.close();
+					break;
+
+				default:
+					break;
 				}
-
-				salida.flush();
-				salida.writeObject(perAux);
-
-				entrada.close();
 
 			}
 
