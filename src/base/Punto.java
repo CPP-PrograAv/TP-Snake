@@ -1,6 +1,8 @@
 package base;
 
-public class Punto {
+import java.io.Serializable;
+
+public class Punto implements Serializable {
 
 	private int x, y;
 

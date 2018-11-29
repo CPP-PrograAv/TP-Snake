@@ -74,11 +74,8 @@ public class Lobby extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				int filaSeleccionada = tablaDeSalas.getSelectedRow();
-				/*
-				 * if (filaSeleccionada == -1) return;
-				 */
-				SalaEspera salaEspera = null;
-				Jugador jugador = new Jugador(persona.getNick());
+				Conexion conexion = new Conexion();
+				(conexion.UnirseSala(new Mensaje(Parametro.UNIRSE,persona,filaSeleccionada))).setVisible(true);
 
 			}
 		});

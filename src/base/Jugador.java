@@ -1,12 +1,13 @@
 package base;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Comparator;
 
 import GameObjects.Snake;
 import medida.Medida;
 
-public class Jugador implements Comparable<Jugador> {
+public class Jugador implements Comparable<Jugador>,Serializable{
 
 	public static int size = Medida.SIZE;
 	private static int idGenral = 0;

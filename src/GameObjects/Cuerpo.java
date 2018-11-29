@@ -4,7 +4,7 @@ import java.awt.*;
 import base.*;
 import medida.*;
 
-public class Cuerpo extends GameObject {
+public class Cuerpo extends GameObject  {
 
 	private Punto ubicacion;
 

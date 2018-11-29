@@ -23,14 +23,19 @@ public class SalaEspera extends JFrame {
 	private Object[] lista;
 	private JButton iniciar, salir;
 	private String nombreSala;
+	private ArrayList<Jugador> Vjugadores = new ArrayList<Jugador>();
+	private JLabel nombreJugador;
 	
-
 	public SalaEspera(String nombreSala, Persona persona) {
 
+		
 		super(nombreSala);
 		Jugador jugador = new Jugador(persona.getNick());
+		Vjugadores.add(jugador);
 		this.nombreSala = nombreSala;
-	
+		
+		nombreJugador = new JLabel(persona.getNick());
+		
 
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -64,7 +69,8 @@ public class SalaEspera extends JFrame {
 				cerrarVentana();
 			}
 		});
-
+		
+		add(nombreJugador,BorderLayout.CENTER);
 	}
 
 	protected void cerrarVentana() {
@@ -77,6 +83,9 @@ public class SalaEspera extends JFrame {
 		return this.cantJugadores;
 	}
 
+	public void añadirJugador(Persona persona) {
+		Vjugadores.add(new Jugador(persona.getNick()));
+	}
 	public Object[] getList() {
 
 		lista = new Object[4];

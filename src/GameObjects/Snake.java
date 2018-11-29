@@ -1,12 +1,13 @@
 package GameObjects;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import base.*;
 import medida.*;
 
-public class Snake extends GameObject {
+public class Snake extends GameObject  {
 
 	private static int ID = ++idgeneral;
 	protected static int IDcuerpo = 99;// para darle un id a los cuerpos

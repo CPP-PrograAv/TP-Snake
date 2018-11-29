@@ -1,10 +1,12 @@
 package GameObjects;
 
 import java.awt.*;
+import java.io.Serializable;
+
 import base.*;
 import medida.Medida;
 
-public abstract class GameObject {
+public abstract class GameObject implements Serializable{
 
 	private Punto ubicacion;
 	private int size;

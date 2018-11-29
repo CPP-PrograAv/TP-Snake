@@ -101,13 +101,30 @@ public class Conexion {
 			return (ArrayList<SalaEspera>) entrada.readObject();
 			
 		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		
-		
 		
 		return null;
 	}
 
+	public SalaEspera UnirseSala(Mensaje paqueteDatos) {
+		
+		try {
+			salida = new ObjectOutputStream(this.socket.getOutputStream());
+			salida.flush();
+			salida.writeObject(paqueteDatos);
+			
+			
+			entrada = new ObjectInputStream(socketOut.getInputStream());
+			SalaEspera sala = (SalaEspera) entrada.readObject();
+			return sala;
+		} catch (IOException | ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
 }

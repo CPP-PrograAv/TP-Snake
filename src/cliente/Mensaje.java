@@ -7,13 +7,18 @@ public class Mensaje implements Serializable {
 	private int cod;
 	private Object dato;
 	private String cadena;
-
+	private int indice;
+	
+	
+	public Mensaje(int cod, Object dato,int indice) {
+		this.cod = cod;
+		this.dato = dato;
+		this.indice=indice;
+	}
 	public Mensaje(int cod) {
 		this.cod = cod;
 	}
 
-	
-	
 	public Mensaje(int cod, Object dato) {
 
 		this.cod = cod;
@@ -49,6 +54,12 @@ public class Mensaje implements Serializable {
 
 	public void setCadena(String cadena) {
 		this.cadena = cadena;
+	}
+	public int getIndice() {
+		return indice;
+	}
+	public void setIndice(int indice) {
+		this.indice = indice;
 	}
 
 }

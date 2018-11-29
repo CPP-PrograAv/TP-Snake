@@ -77,7 +77,7 @@ public class Servidor implements Runnable {
 					salida.writeObject(sala);
 					entrada.close();
 					break;
-					
+
 				case Parametro.REGISTRARSE:
 					persona = (Persona) paqueteDatos.getDato();
 					DAOServidor server = new DAOServidor();
@@ -88,15 +88,21 @@ public class Servidor implements Runnable {
 					entrada.close();
 
 					break;
-					
+
 				case Parametro.ACTUALIZAR_LOBBY:
-					
+
 					ArrayList<SalaEspera> salas = this.getvSalaEspera();
 					salida.flush();
 					salida.writeObject(salas);
-					
+
 					entrada.close();
-					
+
+					break;
+				case Parametro.UNIRSE:
+					vSalaEspera.get(paqueteDatos.getIndice()).añadirJugador((Persona) paqueteDatos.getDato());
+					salida.flush();
+					salida.writeObject(vSalaEspera.get(paqueteDatos.getIndice()));
+					entrada.close();
 					
 					break;
 				default:
@@ -127,7 +133,5 @@ public class Servidor implements Runnable {
 	public void setvSalaEspera(ArrayList<SalaEspera> vSalaEspera) {
 		this.vSalaEspera = vSalaEspera;
 	}
-	
-	
 
 }
