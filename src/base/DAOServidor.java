@@ -25,7 +25,6 @@ public class DAOServidor extends DAO {
 	public DAOServidor() {
 		cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
-
 		factory = cfg.buildSessionFactory();
 	}
 
@@ -55,27 +54,35 @@ public class DAOServidor extends DAO {
 
 		return list_Of_Things;
 	}
-	
+
 	@Override
 	public int realizarRegistro(Persona persona) {
 
-		Pattern pattern = Pattern.compile(
-				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+		Session session = factory.openSession();
+		Transaction tx = session.beginTransaction();
+		List<Object[]> list_Of_Things = null;
 
-		Matcher verificador = pattern.matcher(persona.getMail());
+		String consulta = "select p.mail,p.contraseña,p.nick from Persona p ";
+		consulta += "where p.mail=" + "'" + persona.getMail() + "'";
 
-		if (verificador.find() == false)
-			return Parametro.CORREO_INVALIDO;
+		Query q = session.createQuery(consulta);
+		list_Of_Things = q.getResultList();
+
+		if (list_Of_Things.size() == 1)
+			return Parametro.DUPLICADO; // duplicado..
 		else {
-			if (persona.getMail().equals("") || persona.getContraseña().equals("") || persona.getNick().equals("")) {
-				return Parametro.CAMPOS_VACIOS;
-			} else {
-				ConsultaBBDD.insert(persona);
-				return Parametro.EXITO_REG;
+			try {
+			session.save(persona);
+			tx.commit();
 			}
+			catch (HibernateException e) {
+				if (tx != null)
+					tx.rollback();
+				e.printStackTrace();
+			}
+			return Parametro.EXITO_REG;
 		}
 	}
 
-	
 }
 /* Manejo las consultas de datos con hibernate */

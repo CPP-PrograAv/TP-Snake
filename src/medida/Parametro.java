@@ -11,7 +11,7 @@ public class Parametro {
 	public static final int NUEVASALA = 4;
 	public static final int UNIRSE = 5;
 	
-	public static final int CORREO_INVALIDO = 10;
+	public static final int DUPLICADO = 10;
 	public static final int CAMPOS_VACIOS = 11;
 	public static final int EXITO_REG = 12;
 

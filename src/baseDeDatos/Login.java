@@ -88,7 +88,7 @@ public class Login extends JFrame {
 					Persona resp = new Persona();
 					resp= conexion.loguear(new Mensaje(Parametro.LOGGEO, persona));
 					if(resp.getNick()!=null) {
-						
+
 						setVisible(false);
 						Lobby lob = new Lobby(resp);
 						lob.setVisible(true);
