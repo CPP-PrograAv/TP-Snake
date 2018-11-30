@@ -84,7 +84,7 @@ public class Bienvenida extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Juego juego = new Juego(new Jugador(user.getNick()));
+				Juego juego = new Juego(new Jugador(user.getNick(),user.getPuntaje()));
 				new Thread(juego).start();
 			}
 		});

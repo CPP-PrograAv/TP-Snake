@@ -35,7 +35,7 @@ public class SalaEspera extends JFrame {
 	private ArrayList<Jugador> Vjugadores = new ArrayList<Jugador>();
 	private JList<String> nickJugadores;
 	private Conexion conexion;
-	
+
 //	public static void main(String[] args) {
 //		
 //		Persona per = new Persona();
@@ -43,9 +43,8 @@ public class SalaEspera extends JFrame {
 //		SalaEspera sala = new SalaEspera("hola", per);
 //		
 //	}
-	
-	
-	public SalaEspera(String nombreSala, Persona persona, String tipoJuego, String tipoModoFruta) {
+
+	public SalaEspera(String nombreSala, Persona persona) {
 
 		super(nombreSala);
 		this.nombreSala = nombreSala;
@@ -72,23 +71,22 @@ public class SalaEspera extends JFrame {
 		JLabel adm = new JLabel(persona.getNick());
 		adm.setBounds(20, 20, 80, 40);
 		nickJugadores.add(adm);
-		
-		
+
 		JLabel mensaje = new JLabel("Tipo de Juego:");
-		mensaje.setBounds(200,40, 200,60);
+		mensaje.setBounds(200, 40, 200, 60);
 		contentPane.add(mensaje);
-		
-		JLabel mj = new JLabel(tipoJuego);
-		mj.setBounds(200,60, 200,60);
-		contentPane.add(mj);
-		
+
+//		JLabel mj = new JLabel(tipoJuego);
+//		mj.setBounds(200,60, 200,60);
+//		contentPane.add(mj);
+
 		JLabel mensaje2 = new JLabel("Cantidad de Fruta:");
-		mensaje2.setBounds(200,90, 200,60);
+		mensaje2.setBounds(200, 90, 200, 60);
 		contentPane.add(mensaje2);
-		
-		JLabel tf = new JLabel(tipoModoFruta);
-		tf.setBounds(200,110, 200,60);
-		contentPane.add(tf);
+
+//		JLabel tf = new JLabel(tipoModoFruta);
+//		tf.setBounds(200,110, 200,60);
+//		contentPane.add(tf);
 
 		iniciar = new JButton("Iniciar");
 		iniciar.setBounds(250, 300, 80, 30);
@@ -98,9 +96,9 @@ public class SalaEspera extends JFrame {
 		salir.setBounds(160, 300, 80, 30);
 		contentPane.add(salir);
 
-		Jugador jugador = new Jugador(persona.getNick(),persona.getPuntaje());
+		Jugador jugador = new Jugador(persona.getNick(), persona.getPuntaje());
 		Vjugadores.add(jugador);
-		
+
 		this.numSala = ++cont;
 		this.cantJugadores++;
 
@@ -108,25 +106,28 @@ public class SalaEspera extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				if(Cliente.getConexion().empezarJuego(new Mensaje(Parametro.EMPEZAR_JUEGO)))
+				Mensaje msj = new Mensaje(Parametro.EMPEZAR_JUEGO);
+				Conexion c = Cliente.getConexion();
+				if (c != null) {
+					c.empezarJuego(msj);
 					setVisible(false);
-				else
+				} else
 					System.out.println("No puedo comenzar..");
 			}
+
 		});
 
 		salir.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Mensaje msj = new Mensaje(Parametro.SALIO_JUGADOR,persona);
+				Mensaje msj = new Mensaje(Parametro.SALIO_JUGADOR, persona);
 				Conexion c = Cliente.getConexion();
-				if(c!=null)
-				c.solicitarSalir(msj);
+				if (c != null)
+					c.solicitarSalir(msj);
 				else
 					System.out.println("NO HAY NADA");
-				
+
 				dispose();
 			}
 		});
@@ -134,31 +135,34 @@ public class SalaEspera extends JFrame {
 		setVisible(true);
 	}
 
-
 	public void setConexion(Conexion con) {
 		this.conexion = con;
+
+		if (this.conexion != null)
+			System.out.println("HAY CONEXIOOOOOOOOOOOOOOON");
+		else
+			System.out.println("NO HAY CONEXIOOOON");
 	}
-	
+
 	public Conexion getConexion() {
 		return this.conexion;
 	}
-	
+
 	public int getCantJugadores() {
 		return this.cantJugadores;
 	}
 
 	public void agregarJugador(Persona persona) {
-		Vjugadores.add(new Jugador(persona.getNick(),persona.getPuntaje()));
+		Vjugadores.add(new Jugador(persona.getNick(), persona.getPuntaje()));
 		JLabel n = new JLabel(persona.getNick());
 		n.setBounds(20, 50, 80, 20);
 		nickJugadores.add(n);
 	}
-	
+
 	public void sacarJugador(Persona persona) {
 		Vjugadores.remove(persona);
 		cantJugadores--;
 	}
-	
 
 	public Object[] getList() {
 

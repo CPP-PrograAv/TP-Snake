@@ -83,6 +83,8 @@ public class DAOServidor extends DAO {
 			return Parametro.EXITO_REG;
 		}
 	}
+	
+	
 
 }
 /* Manejo las consultas de datos con hibernate */

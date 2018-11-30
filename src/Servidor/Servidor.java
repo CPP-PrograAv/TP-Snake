@@ -67,20 +67,19 @@ public class Servidor implements Runnable {
 					salida.flush();
 					salida.writeObject(perAux);
 
-//					entrada.close();
-
 					break;
 
 				case Parametro.NUEVASALA:
-					persona = (Persona) paqueteDatos.getDato();
-					SalaEspera sala = new SalaEspera(paqueteDatos.getCadena(), persona,paqueteDatos.getTipoJuego(),paqueteDatos.getTipoModoFruta());
+					
+					persona = (Persona) paqueteDatos.getDatoAux();
+					SalaEspera sala= (SalaEspera) paqueteDatos.getDato();
 					vSalaEspera.add(sala);
 					vPersonas.add(persona);
 					vJugador.add(new Jugador(persona.getNick(),persona.getPuntaje()));
-
+					boolean flag = true;
 					salida.flush();
-					salida.writeObject(sala);
-//					entrada.close();
+					salida.writeObject(flag);
+					
 					break;
 
 				case Parametro.REGISTRARSE:
@@ -90,7 +89,6 @@ public class Servidor implements Runnable {
 
 					salida.flush();
 					salida.writeObject(respuesta);
-//					entrada.close();
 
 					break;
 				

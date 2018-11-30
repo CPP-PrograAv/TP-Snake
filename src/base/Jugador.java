@@ -22,11 +22,9 @@ public class Jugador implements Comparable<Jugador>,Serializable{
 		snake.setPuntaje(puntaje);
 	}
 
-	
 	public Jugador(String nombreJugador, int x, int y) {
 		snake = new Snake(x / size, y / size, ++idGenral, Color.BLUE);
 		this.nombreJugador = nombreJugador;
-
 	}
 
 	public int getPuntaje() {

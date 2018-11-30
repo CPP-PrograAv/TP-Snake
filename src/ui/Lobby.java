@@ -67,15 +67,24 @@ public class Lobby extends JFrame {
 		for (SalaEspera s : vSalas)
 			model.addRow(s.getList());
 		model.fireTableDataChanged();
-
+		
+		panel1.add(unirse);
+		panel1.add(crearSala);
+		add(panel1, BorderLayout.NORTH);
+		add(panel2);
+		add(scroll);
+		setVisible(true);
+		
 		unirse.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				int filaSeleccionada = tablaDeSalas.getSelectedRow();
-				(Cliente.getConexion().UnirseSala(new Mensaje(Parametro.UNIRSE, persona, filaSeleccionada))).setVisible(true);
 				
+				if(filaSeleccionada==-1)
+					JOptionPane.showMessageDialog(null, "Debe seleccionar una sala...");
+				else
+					(Cliente.getConexion().UnirseSala(new Mensaje(Parametro.UNIRSE, persona, filaSeleccionada))).setVisible(true);
 			}
 		});
 
@@ -83,12 +92,11 @@ public class Lobby extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				String nombreSala = "";
 				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
 
-				SalaEspera sala = Cliente.getConexion().crearSala(new Mensaje(Parametro.NUEVASALA, persona, nombreSala));
-//				sala.setConexion(Cliente.getConexion());
+				SalaEspera sala = new SalaEspera(nombreSala, persona);
+				Cliente.getConexion().crearSala(new Mensaje(Parametro.NUEVASALA, sala, persona));
 				SalaEsperaHilo hilo = new SalaEsperaHilo(Cliente.getConexion(), sala);
 				hilo.start();
 				
@@ -99,12 +107,8 @@ public class Lobby extends JFrame {
 			}
 		});
 
-		panel1.add(unirse);
-		panel1.add(crearSala);
-		add(panel1, BorderLayout.NORTH);
-		add(panel2);
-		add(scroll);
-		setVisible(true);
+	
+
 
 	}
 
