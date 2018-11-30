@@ -87,7 +87,7 @@ public class Juego extends JFrame implements Runnable {
 
 	private void añadirJugador() {
 
-		Jugador JugadorRobot = new Jugador(persona.getNick());
+		Jugador JugadorRobot = new Jugador(persona.getNick(),persona.getPuntaje());
 		jugadores.add(JugadorRobot);
 		laminaJuego.agregarSnake(jugadores.get(jugadores.size() - 1).getSnake());
 	}
@@ -98,9 +98,7 @@ public class Juego extends JFrame implements Runnable {
 		laminaJuego.agregarSnake(jugadores.get(jugadores.size() - 1).getSnake());
 	}
 
-	/**
-	 * Inicia la partida
-	 */
+	
 
 	@Override
 	public void run() {

@@ -18,13 +18,7 @@ public class Snake extends GameObject  {
 	private ArrayList<Cuerpo> cuerpos = new ArrayList<Cuerpo>();
 	private Color color;
 
-	/**
-	 * Crea una snake en la posicion x, y con id indicados
-	 * 
-	 * @param poición  X
-	 * @param posición Y
-	 * @param id
-	 */
+	
 	public Snake(int posX, int posY, int id, Color color) {
 		super(new Punto(posX, posY), id);
 		cuerpos.add(new Cuerpo(new Punto(posX - 1, posY), IDcuerpo));// 3, 4, 20, ID
@@ -33,14 +27,7 @@ public class Snake extends GameObject  {
 		this.color = color;
 	}
 
-	/**
-	 * Crea una snake en la posicion X,Y,de id y longitud indicados
-	 * 
-	 * @param poición  X
-	 * @param posición Y
-	 * @param id
-	 * @param longitud
-	 */
+	
 
 	public Snake(int posX, int posY, int id, int longitud) {
 		super(new Punto(posX, posY), id);
@@ -105,9 +92,7 @@ public class Snake extends GameObject  {
 		puntaje++;
 	}
 
-	/**
-	 * Mata a la snake y reemplazo sus posiciones por comida
-	 */
+	
 	public void morir() {
 
 		muerto = true;
@@ -178,6 +163,12 @@ public class Snake extends GameObject  {
 	public int getPuntaje() {
 		return this.puntaje;
 	}
+
+	public void setPuntaje(int puntaje) {
+		this.puntaje = puntaje;
+	}
+
+
 
 	@Override
 	public void accionColision(Snake snake) {

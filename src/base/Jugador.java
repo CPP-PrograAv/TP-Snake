@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import GameObjects.Snake;
+import baseDeDatos.Persona;
 import medida.Medida;
 
 public class Jugador implements Comparable<Jugador>,Serializable{
@@ -15,12 +16,13 @@ public class Jugador implements Comparable<Jugador>,Serializable{
 	private String nombreJugador;
 	Snake snake;
 
-	public Jugador(String nombreJugador) {
+	public Jugador(String nombreJugador,int puntaje) {
 		snake = new Snake(80 / size, 80 / size, ++idGenral, Color.RED);
 		this.nombreJugador = nombreJugador;
+		snake.setPuntaje(puntaje);
 	}
 
-	// settear un jugador.
+	
 	public Jugador(String nombreJugador, int x, int y) {
 		snake = new Snake(x / size, y / size, ++idGenral, Color.BLUE);
 		this.nombreJugador = nombreJugador;
@@ -32,7 +34,7 @@ public class Jugador implements Comparable<Jugador>,Serializable{
 	}
 
 	public void setPuntaje(int puntaje) {
-		this.puntaje = puntaje;
+		snake.setPuntaje(puntaje);
 	}
 
 	public Snake getSnake() {

@@ -72,7 +72,7 @@ public class Servidor implements Runnable {
 					persona = (Persona) paqueteDatos.getDato();
 					SalaEspera sala = new SalaEspera(paqueteDatos.getCadena(), persona,paqueteDatos.getTipoJuego(),paqueteDatos.getTipoModoFruta());
 					vSalaEspera.add(sala);
-					vJugador.add(new Jugador(persona.getNick()));
+					vJugador.add(new Jugador(persona.getNick(),persona.getPuntaje()));
 					salida.flush();
 					salida.writeObject(sala);
 					entrada.close();

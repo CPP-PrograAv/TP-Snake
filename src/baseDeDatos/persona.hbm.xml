@@ -11,7 +11,7 @@
 	 <property column ="mail" name="mail" not-null="true" type="string"/>
 	  <property column ="contraseña" name="contraseña" not-null="true" type="string"/>
 	   <property column ="color" name="color" not-null="true" type="string"/>
-
+		<property column ="puntaje" name="puntaje" not-null="true" type="int"/>
  </class>
  
 

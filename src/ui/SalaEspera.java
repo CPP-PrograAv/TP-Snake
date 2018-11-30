@@ -95,9 +95,9 @@ public class SalaEspera extends JFrame {
 		salir.setBounds(160, 300, 80, 30);
 		contentPane.add(salir);
 
-		Jugador jugador = new Jugador(persona.getNick());
+		Jugador jugador = new Jugador(persona.getNick(),persona.getPuntaje());
 		Vjugadores.add(jugador);
-
+		
 		this.numSala = ++cont;
 		this.cantJugadores++;
 
@@ -131,7 +131,7 @@ public class SalaEspera extends JFrame {
 	}
 
 	public void añadirJugador(Persona persona) {
-		Vjugadores.add(new Jugador(persona.getNick()));
+		Vjugadores.add(new Jugador(persona.getNick(),persona.getPuntaje()));
 
 		JLabel n = new JLabel(persona.getNick());
 		n.setBounds(20, 50, 80, 20);

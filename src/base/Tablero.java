@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import GameObjects.*;
+import cliente.Conexion;
 import medida.Medida;
 
 public class Tablero extends JPanel {
@@ -37,19 +38,14 @@ public class Tablero extends JPanel {
 		agregarFruta();
 	}
 
-	/**
-	 * Agrego los obstaculos del tablero
-	 */
+	
 	public void agregarObstaculo() {
 		for (int i = 0; i < 8; i++) {
 			obstaculos.add(new Obstaculo());
 		}
 	}
 
-	/**
-	 * Agrego las frutas al tablero basandome en cantidadFruta que es el limite de
-	 * frutas en el tablero
-	 */
+	
 
 	private void agregarFruta() {
 		for (int i = 0; i < cantidadFruta; i++)
@@ -59,17 +55,16 @@ public class Tablero extends JPanel {
 
 	public void actualizar(int direccion) {
 
-		// snake.setDireccion(direccion);
 		viboritas.get(0).setDireccion(direccion);
 		verificarColisiones();
 		move();
 		repaint();
 
-		// sacarlo afuera
+		
 		if (viboritas.get(0).muerto) {
 			System.out.println("Muerto" + viboritas.get(0).getIdSnake());
 
-			// mensaje
+			
 			JOptionPane.showMessageDialog(null, "termino el juego, su vibora esta muerta", "fin del juego",
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
@@ -82,22 +77,15 @@ public class Tablero extends JPanel {
 			if (colisionado != null)
 				colisionado.accionColision(viboritas.get(i));
 
-			// sacar del array los muertos
+			
 			if (i > 0 && viboritas.get(i).getMuerto() == true) {
 				System.out.println("Muerto: " + viboritas.get(i).getIdSnake());
 				viboritas.remove(i);
-//				i--;
+//				
 			}
 		}
 
-		// sacar del array a los muertos, no manejo el 0, pensar otra forma..
-//		for (int i = 1; i < viboritas.size(); i++) {
-//			if(viboritas.get(i).getMuerto() == true) {
-//				System.out.println("Muerto: " +viboritas.get(i).getIdSnake());
-//				viboritas.remove(i);
-//			}
-//		}
-
+	
 	}
 
 	private void move() {
@@ -107,17 +95,6 @@ public class Tablero extends JPanel {
 		}
 	}
 
-	/**
-	 * Pinto lo que se encuentre en el tablero si es distinto de null.
-	 * Tanto el obstaculo, la fruta y el cuerpo tienen un color constante, no hace falta
-	 * preguntar que objeto se encuentra en esa posicion del tablero (evito usar los
-	 * instanceOf)
-	 * 
-	 * Para el pintado de la cabeza de la snake, se cambio el constructor de la
-	 * snake para que reciba como parametro el color (que podriamos tomarlo en el
-	 * registro, aunque podriamos tirar algo random tambien...)
-	 * 
-	 */
 
 	public void paint(Graphics g) {
 		super.paint(g); // VUELVO A PINTAR, Y BORRO EL ANTERIOR
@@ -138,18 +115,12 @@ public class Tablero extends JPanel {
 		g2d.fillRect(0, LARGO + BORDE / 2, ANCHO + BORDE, BORDE / 2);// borde inferior
 	}
 
-	/**
-	 * Agrego una snake al tablero
-	 * 
-	 * @param snake
-	 */
+
 	public void agregarSnake(Snake snake) {
 		viboritas.add(snake);
 	}
 
-	/**
-	 * Muestro la matriz de gameObjects
-	 */
+	
 	private void mostrarTablero() {
 		System.out.println("ini:");
 		for (int i = 0; i < ANCHO / size; i++) {

@@ -8,6 +8,7 @@ public class Persona implements Serializable{
 	private String mail;
 	private String contraseña;
 	private String color;
+	private int puntaje;
 	
 	public Persona(int idPersona, String nick, String color) {
 		this.idPersona = idPersona;
@@ -60,6 +61,14 @@ public class Persona implements Serializable{
 	public String toString() {
 		return "Persona [idPersona=" + idPersona + ", nick=" + nick + ", mail=" + mail + ", contraseña=" + contraseña
 				+ ", color=" + color + "]";
+	}
+
+	public int getPuntaje() {
+		return puntaje;
+	}
+
+	public void setPuntaje(int puntaje) {
+		this.puntaje = puntaje;
 	}
 	
 	
