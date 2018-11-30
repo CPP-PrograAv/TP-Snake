@@ -1,9 +1,11 @@
 package cliente;
 
-import ui.Bienvenida;
+import baseDeDatos.Login;
+import ui.*;
+import ui.Multiplayer;
 
 public class MainCliente {
 	public static void main(String[] args) {
-		Bienvenida bienvenida = new Bienvenida();
+		Multiplayer bienvenida = new Multiplayer();
 	}
 }

@@ -13,6 +13,9 @@ import cliente.*;
 import medida.*;
 import ui.Multiplayer;
 
+
+
+
 public class Registro extends JFrame {
 
 	JTextField textField1, textField2, textField3, textField4;
@@ -107,17 +110,15 @@ public class Registro extends JFrame {
 		add(label2);
 		add(label3);
 		add(label4);
-
 		add(textField1);
 		add(textField2);
 		add(textField3);
 		add(colores);
-
 		add(boton1);
-
 		setVisible(true);
-
 	}
+	
+	
 
 	public static void main(String[] args) {
 

@@ -81,8 +81,8 @@ public class Multiplayer2 extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							Bienvenida frame = new Bienvenida();
-							frame.setVisible(true);
+//							Bienvenida frame = new Bienvenida();
+//							frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

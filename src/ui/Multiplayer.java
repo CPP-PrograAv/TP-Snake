@@ -37,7 +37,7 @@ public class Multiplayer extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				Bienvenida bienvenida = new Bienvenida();
+//				Bienvenida bienvenida = new Bienvenida();
 				setVisible(false);
 			}
 		});

@@ -94,7 +94,6 @@ public class Servidor implements Runnable {
 					ArrayList<SalaEspera> salas = this.getvSalaEspera();
 					salida.flush();
 					salida.writeObject(salas);
-
 					entrada.close();
 
 					break;
@@ -105,6 +104,14 @@ public class Servidor implements Runnable {
 					entrada.close();
 					
 					break;
+					
+				case Parametro.EMPEZAR_JUEGO:
+					
+					
+					
+					
+					break;
+				
 				default:
 					break;
 				}

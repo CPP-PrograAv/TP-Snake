@@ -85,17 +85,30 @@ public class Lobby extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				String nombreSala = "";
-				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
+//				String nombreSala = "";
+//				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
 
 				Sala salaIntermedia = new Sala();
-				Conexion conexion = new Conexion();
-				SalaEspera sala = conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona, nombreSala));
-
-				model = (DefaultTableModel) tablaDeSalas.getModel();
-				model.addRow(sala.getList());
-				model.fireTableDataChanged();
-
+				salaIntermedia.setVisible(true);
+				
+				salaIntermedia.getButton().addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						salaIntermedia.setVisible(false);
+						Conexion conexion = new Conexion();
+						SalaEspera sala = conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona, salaIntermedia.getNombre()));
+						sala.setDatos(salaIntermedia.getTipoJuego(), salaIntermedia.getModoFruta());
+						sala.setVisible(true);
+						
+						model = (DefaultTableModel) tablaDeSalas.getModel();
+						model.addRow(sala.getList());
+						model.fireTableDataChanged();
+						
+					}
+				});
+				
+				
 			}
 		});
 

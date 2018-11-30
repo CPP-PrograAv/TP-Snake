@@ -13,6 +13,9 @@ import javax.swing.JList;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -21,7 +24,9 @@ public class Sala extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
+	private JButton btnCancelar, btnCrear;
+	private JComboBox comboBoxFruta;
+	private JComboBox comboBoxModoJueg;
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +58,7 @@ public class Sala extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, 1.0, 0.0};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		contentPane.setLayout(gbl_contentPane);
-		
+	
 		JLabel lblNewLabel_1 = new JLabel("Sala de ");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.gridwidth = 2;
@@ -103,14 +108,14 @@ public class Sala extends JFrame {
 		gbc_lblNewLabel_2.gridy = 3;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Supervivencia", "Contrarreloj"}));
+		comboBoxModoJueg = new JComboBox();
+		comboBoxModoJueg.setModel(new DefaultComboBoxModel(new String[] {"Supervivencia", "Contrarreloj"}));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 2;
 		gbc_comboBox.gridy = 3;
-		contentPane.add(comboBox, gbc_comboBox);
+		contentPane.add(comboBoxModoJueg, gbc_comboBox);
 		
 		JLabel lblNewLabel_3 = new JLabel("Fruta");
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
@@ -120,28 +125,56 @@ public class Sala extends JFrame {
 		gbc_lblNewLabel_3.gridy = 4;
 		contentPane.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Normal", "Escasa", "Abundante"}));
+		comboBoxFruta = new JComboBox();
+		comboBoxFruta.setModel(new DefaultComboBoxModel(new String[] {"Normal", "Escasa", "Abundante"}));
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
 		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox_1.gridx = 2;
 		gbc_comboBox_1.gridy = 4;
-		contentPane.add(comboBox_1, gbc_comboBox_1);
+		contentPane.add(comboBoxFruta, gbc_comboBox_1);
 		
-		JButton btnNewButton = new JButton("Abrir");
+		btnCrear = new JButton("Crear");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 8;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
+		contentPane.add(btnCrear, gbc_btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Iniciar");
-		btnNewButton_1.setEnabled(false);
+		btnCancelar = new JButton("Cancelar");
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.gridx = 3;
 		gbc_btnNewButton_1.gridy = 8;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+		contentPane.add(btnCancelar, gbc_btnNewButton_1);
+		
+		btnCancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
+			}
+		});
+		
+		
 	}
-
+	
+	public JButton getButton() {
+		
+		return this.btnCrear;
+		
+	}
+	
+	public String getTipoJuego() {
+		return (String) comboBoxModoJueg.getSelectedItem();
+	}
+	
+	public String getModoFruta() {
+		return (String) comboBoxFruta.getSelectedItem();
+	}
+	
+	public String getNombre() {
+		return this.textField.getText();
+	}
+	
 }
