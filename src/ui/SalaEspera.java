@@ -32,7 +32,17 @@ public class SalaEspera extends JFrame {
 	private ArrayList<Jugador> Vjugadores = new ArrayList<Jugador>();
 	private JList<String> nickJugadores;
 
-	public SalaEspera(String nombreSala, Persona persona) {
+	
+//	public static void main(String[] args) {
+//		
+//		Persona per = new Persona();
+//		per.setNick("hola");
+//		SalaEspera sala = new SalaEspera("hola", per);
+//		
+//	}
+	
+	
+	public SalaEspera(String nombreSala, Persona persona, String tipoJuego, String tipoModoFruta) {
 
 		super(nombreSala);
 		this.nombreSala = nombreSala;
@@ -59,14 +69,31 @@ public class SalaEspera extends JFrame {
 		JLabel adm = new JLabel(persona.getNick());
 		adm.setBounds(20, 20, 80, 40);
 		nickJugadores.add(adm);
+		
+		
+		JLabel mensaje = new JLabel("Tipo de Juego:");
+		mensaje.setBounds(200,40, 200,60);
+		contentPane.add(mensaje);
+		
+		JLabel mj = new JLabel(tipoJuego);
+		mj.setBounds(200,60, 200,60);
+		contentPane.add(mj);
+		
+		JLabel mensaje2 = new JLabel("Cantidad de Fruta:");
+		mensaje2.setBounds(200,90, 200,60);
+		contentPane.add(mensaje2);
+		
+		JLabel tf = new JLabel(tipoModoFruta);
+		tf.setBounds(200,110, 200,60);
+		contentPane.add(tf);
 
 		iniciar = new JButton("Iniciar");
 		iniciar.setBounds(250, 300, 80, 30);
-		contentPane.add(iniciar, BorderLayout.NORTH);
+		contentPane.add(iniciar);
 
 		salir = new JButton("Salir");
 		salir.setBounds(160, 300, 80, 30);
-		contentPane.add(salir, BorderLayout.SOUTH);
+		contentPane.add(salir);
 
 		Jugador jugador = new Jugador(persona.getNick());
 		Vjugadores.add(jugador);
@@ -78,6 +105,7 @@ public class SalaEspera extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("PRESION");
 				setVisible(false);
 				Juego juego = new Juego(persona);
 				new Thread(juego).start();
@@ -88,33 +116,15 @@ public class SalaEspera extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				System.out.println("PRESION2");
 				setVisible(false);
 				cantJugadores--;
 			}
 		});
 
+		setVisible(true);
 	}
 
-	public void setDatos(String tipoMJ, String tipoMFruta) {
-
-		JLabel mensaje = new JLabel("Tipo de Juego:");
-		mensaje.setBounds(200,40, 200,60);
-		contentPane.add(mensaje);
-		
-		JLabel mj = new JLabel(tipoMJ);
-		mj.setBounds(200,60, 200,60);
-		contentPane.add(mj);
-		
-		JLabel mensaje2 = new JLabel("Cantidad de Fruta:");
-		mensaje2.setBounds(200,90, 200,60);
-		contentPane.add(mensaje2);
-		
-		JLabel tf = new JLabel(tipoMFruta);
-		tf.setBounds(200,110, 200,60);
-		contentPane.add(tf);
-		
-	}
 
 	public int getCantJugadores() {
 		return this.cantJugadores;

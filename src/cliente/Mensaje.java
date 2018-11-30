@@ -8,6 +8,8 @@ public class Mensaje implements Serializable {
 	private Object dato;
 	private String cadena;
 	private int indice;
+	private String tipoJuego;
+	private String tipoModoFruta;
 	
 	
 	public Mensaje(int cod, Object dato,int indice) {
@@ -15,6 +17,7 @@ public class Mensaje implements Serializable {
 		this.dato = dato;
 		this.indice=indice;
 	}
+	
 	public Mensaje(int cod) {
 		this.cod = cod;
 	}
@@ -30,6 +33,31 @@ public class Mensaje implements Serializable {
 		this.cod = cod;
 		this.dato = dato;
 		this.cadena = cadena;
+	}
+	
+	public Mensaje(int cod, Object dato, String cadena, String tipoJuego, String cantFruta) {
+
+		this.cod = cod;
+		this.dato = dato;
+		this.cadena = cadena;
+		
+	}
+
+
+	public String getTipoJuego() {
+		return tipoJuego;
+	}
+
+	public void setTipoJuego(String tipoJuego) {
+		this.tipoJuego = tipoJuego;
+	}
+
+	public String getTipoModoFruta() {
+		return tipoModoFruta;
+	}
+
+	public void setTipoModoFruta(String tipoModoFruta) {
+		this.tipoModoFruta = tipoModoFruta;
 	}
 
 	public int getCod() {

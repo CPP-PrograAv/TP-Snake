@@ -61,7 +61,7 @@ public class Lobby extends JFrame {
 		// Actualiza Lobby
 		Conexion conexion = new Conexion();
 		vSalas = conexion.actualizarLobby(new Mensaje(Parametro.ACTUALIZAR_LOBBY));
-		
+
 		model = (DefaultTableModel) tablaDeSalas.getModel();
 
 		for (SalaEspera s : vSalas)
@@ -75,7 +75,7 @@ public class Lobby extends JFrame {
 
 				int filaSeleccionada = tablaDeSalas.getSelectedRow();
 				Conexion conexion = new Conexion();
-				(conexion.UnirseSala(new Mensaje(Parametro.UNIRSE,persona,filaSeleccionada))).setVisible(true);
+				(conexion.UnirseSala(new Mensaje(Parametro.UNIRSE, persona, filaSeleccionada))).setVisible(true);
 
 			}
 		});
@@ -85,30 +85,12 @@ public class Lobby extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-//				String nombreSala = "";
-//				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
+				String nombreSala = "";
+				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
 
-				Sala salaIntermedia = new Sala();
-				salaIntermedia.setVisible(true);
-				
-				salaIntermedia.getButton().addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						salaIntermedia.setVisible(false);
-						Conexion conexion = new Conexion();
-						SalaEspera sala = conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona, salaIntermedia.getNombre()));
-						sala.setDatos(salaIntermedia.getTipoJuego(), salaIntermedia.getModoFruta());
-						sala.setVisible(true);
-						
-						model = (DefaultTableModel) tablaDeSalas.getModel();
-						model.addRow(sala.getList());
-						model.fireTableDataChanged();
-						
-					}
-				});
-				
-				
+				Conexion conexion = new Conexion();
+				SalaEspera sala = conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona, nombreSala));
+
 			}
 		});
 
