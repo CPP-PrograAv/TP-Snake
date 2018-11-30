@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.hibernate.cfg.annotations.ListBinder;
 
+import cliente.Cliente;
 import cliente.Conexion;
 import cliente.Mensaje;
 import medida.Parametro;
@@ -41,9 +42,7 @@ public class Login extends JFrame {
 	JPanel contentPane;
 	
 	public static void main(String[] args) {
-		
 		Login lg = new Login();
-		
 	}
 
 	public Login() {
@@ -122,7 +121,6 @@ public class Login extends JFrame {
 						+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
 				Matcher verificador = pattern.matcher(persona.getMail());
-
 				if (verificador.find() == false)
 					JOptionPane.showMessageDialog(null,
 							"el email ingresado es invalido.verifique su email e ingreselo nuevamente");
@@ -130,9 +128,9 @@ public class Login extends JFrame {
 					JOptionPane.showMessageDialog(null, "llene todos los campos");
 				}
 				 else {
-					Conexion conexion = new Conexion();
+
 					Persona resp = new Persona();
-					resp= conexion.loguear(new Mensaje(Parametro.LOGGEO, persona));
+					resp= Cliente.getConexion().loguear(new Mensaje(Parametro.LOGGEO, persona));
 					if(resp.getNick()!=null) {
 						setVisible(false);
 						Bienvenida bienvenida = new Bienvenida(resp);						

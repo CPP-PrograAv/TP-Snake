@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import base.Juego;
+import base.Jugador;
 import baseDeDatos.Login;
 import baseDeDatos.Persona;
 
@@ -83,7 +84,7 @@ public class Bienvenida extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Juego juego = new Juego(new Persona(1,"Jugador","Azul"));
+				Juego juego = new Juego(new Jugador(user.getNick()));
 				new Thread(juego).start();
 			}
 		});

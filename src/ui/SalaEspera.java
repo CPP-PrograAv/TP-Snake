@@ -19,7 +19,10 @@ import org.hibernate.query.criteria.internal.expression.function.AggregationFunc
 import base.Juego;
 import base.Jugador;
 import baseDeDatos.Persona;
+import cliente.Cliente;
 import cliente.Conexion;
+import cliente.Mensaje;
+import medida.Parametro;
 
 public class SalaEspera extends JFrame {
 	private static int cont = 0;
@@ -31,7 +34,7 @@ public class SalaEspera extends JFrame {
 	private String nombreSala;
 	private ArrayList<Jugador> Vjugadores = new ArrayList<Jugador>();
 	private JList<String> nickJugadores;
-
+	private Conexion conexion;
 	
 //	public static void main(String[] args) {
 //		
@@ -105,10 +108,11 @@ public class SalaEspera extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("PRESION");
-				setVisible(false);
-				Juego juego = new Juego(persona);
-				new Thread(juego).start();
+				
+				if(Cliente.getConexion().empezarJuego(new Mensaje(Parametro.EMPEZAR_JUEGO)))
+					setVisible(false);
+				else
+					System.out.println("No puedo comenzar..");
 			}
 		});
 
@@ -116,9 +120,14 @@ public class SalaEspera extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("PRESION2");
-				setVisible(false);
-				cantJugadores--;
+				Mensaje msj = new Mensaje(Parametro.SALIO_JUGADOR,persona);
+				Conexion c = Cliente.getConexion();
+				if(c!=null)
+				c.solicitarSalir(msj);
+				else
+					System.out.println("NO HAY NADA");
+				
+				dispose();
 			}
 		});
 
@@ -126,18 +135,31 @@ public class SalaEspera extends JFrame {
 	}
 
 
+	public void setConexion(Conexion con) {
+		this.conexion = con;
+	}
+	
+	public Conexion getConexion() {
+		return this.conexion;
+	}
+	
 	public int getCantJugadores() {
 		return this.cantJugadores;
 	}
 
-	public void añadirJugador(Persona persona) {
+	public void agregarJugador(Persona persona) {
 		Vjugadores.add(new Jugador(persona.getNick()));
 
 		JLabel n = new JLabel(persona.getNick());
 		n.setBounds(20, 50, 80, 20);
 		nickJugadores.add(n);
-
 	}
+	
+	public void sacarJugador(Persona persona) {
+		Vjugadores.remove(persona);
+		cantJugadores--;
+	}
+	
 
 	public Object[] getList() {
 

@@ -88,9 +88,9 @@ public class Registro extends JFrame {
 							|| textField3.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
 					} else {
-						Conexion conexion = new Conexion();
+//						Conexion conexion = new Conexion();
 						System.out.println("ENTRO");
-						int resp = conexion.registrarse(new Mensaje(Parametro.REGISTRARSE, persona));
+						int resp = Cliente.getConexion().registrarse(new Mensaje(Parametro.REGISTRARSE, persona));
 
 						if (resp == Parametro.DUPLICADO)
 							JOptionPane.showMessageDialog(null, "El correo ya esta registrado.. Ingrese nuevamente");

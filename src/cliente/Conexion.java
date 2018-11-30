@@ -17,34 +17,50 @@ public class Conexion {
 	private Socket socket;
 	private Socket socketOut;
 
-	public Conexion() {
-
+	public Conexion(Socket socket, Socket socketOut) {
+		
+		
 		try {
-			socket = new Socket("localhost", Parametro.PUERTO1);
-			socketOut = new Socket("localhost", Parametro.PUERTO2);
+			this.socket = socket;
+			this.socketOut = socketOut;
+			salida = new ObjectOutputStream(this.socket.getOutputStream());
+			entrada = new ObjectInputStream(this.socketOut.getInputStream());
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+	}	
+	
+	public Mensaje escucharMensaje() {
+		
+		Mensaje msj = null;
+		
+		try {
+			msj = (Mensaje) entrada.readObject();
+			return msj;
+		
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return msj;
 	}
-
+	
+	
 	public Persona loguear(Mensaje paqueteDatos) {
 
 		try {
 
-			salida = new ObjectOutputStream(this.socket.getOutputStream());
 			salida.flush();
 			salida.writeObject(paqueteDatos); // mando msj
-//			socket.close();
-
-			entrada = new ObjectInputStream(socketOut.getInputStream());
+			
 			Persona per = (Persona) entrada.readObject();
 
 			return per;
 
-//			return persona;
 		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -55,10 +71,9 @@ public class Conexion {
 
 		try {
 
-			salida = new ObjectOutputStream(this.socket.getOutputStream());
 			salida.flush();
 			salida.writeObject(paqueteDatos);
-			entrada = new ObjectInputStream(socketOut.getInputStream());
+			
 			SalaEspera Sala = (SalaEspera) entrada.readObject();
 			return Sala;
 
@@ -67,19 +82,27 @@ public class Conexion {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
+	
+	public void solicitarSalir(Mensaje paqueteDatos) {
+		
+		try {
+			salida.flush();
+			salida.writeObject(paqueteDatos);
+			
+		}catch (Exception e) {
+		
+		}
+	}
+	
 
 	public int registrarse(Mensaje paqueteDatos) {
 
 		int resp = 0;
 		try {
 
-			salida = new ObjectOutputStream(this.socket.getOutputStream());
 			salida.flush();
 			salida.writeObject(paqueteDatos);
-
-			entrada = new ObjectInputStream(socketOut.getInputStream());
 			resp = (int) entrada.readObject();
 			return resp;
 
@@ -91,13 +114,10 @@ public class Conexion {
 	
 	public ArrayList<SalaEspera> actualizarLobby(Mensaje paqueteDatos){
 		
-		
 		try {
-			salida = new ObjectOutputStream(this.socket.getOutputStream());
 			salida.flush();
 			salida.writeObject(paqueteDatos);
 			
-			entrada = new ObjectInputStream(socketOut.getInputStream());
 			return (ArrayList<SalaEspera>) entrada.readObject();
 			
 		} catch (IOException | ClassNotFoundException e) {
@@ -111,12 +131,9 @@ public class Conexion {
 	public SalaEspera UnirseSala(Mensaje paqueteDatos) {
 		
 		try {
-			salida = new ObjectOutputStream(this.socket.getOutputStream());
 			salida.flush();
 			salida.writeObject(paqueteDatos);
 			
-			
-			entrada = new ObjectInputStream(socketOut.getInputStream());
 			SalaEspera sala = (SalaEspera) entrada.readObject();
 			return sala;
 		} catch (IOException | ClassNotFoundException e) {
@@ -125,6 +142,19 @@ public class Conexion {
 		}
 		
 		return null;
-		
 	}
+	
+	public boolean empezarJuego(Mensaje paqueteDatos) {
+		
+		try {
+			salida.flush();
+			salida.writeObject(paqueteDatos);
+			
+		}catch (IOException e) {
+			
+		}
+		
+		return true;
+	}
+	
 }

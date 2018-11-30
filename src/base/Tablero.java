@@ -68,7 +68,6 @@ public class Tablero extends JPanel {
 		// sacarlo afuera
 		if (viboritas.get(0).muerto) {
 			System.out.println("Muerto" + viboritas.get(0).getIdSnake());
-
 			// mensaje
 			JOptionPane.showMessageDialog(null, "termino el juego, su vibora esta muerta", "fin del juego",
 					JOptionPane.ERROR_MESSAGE);
@@ -123,8 +122,8 @@ public class Tablero extends JPanel {
 		super.paint(g); // VUELVO A PINTAR, Y BORRO EL ANTERIOR
 		Graphics2D g2d = (Graphics2D) g;
 
-		for (int i = 0; i < ANCHO / size; i++) {
-			for (int j = 0; j < ANCHO / size; j++)
+		for (int i = 0; i < Medida.SIZE_MATRIZ; i++) {
+			for (int j = 0; j <Medida.SIZE_MATRIZ; j++)
 				if (tablero[j][i] != null) { // si es distinto de null pinto.
 					tablero[j][i].paint(g2d);
 				}

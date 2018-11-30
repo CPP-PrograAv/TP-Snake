@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import base.Juego;
 import base.Jugador;
 import baseDeDatos.Persona;
+import cliente.Cliente;
 import cliente.Conexion;
 import cliente.Mensaje;
 import medida.Parametro;
@@ -59,8 +60,7 @@ public class Lobby extends JFrame {
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		// Actualiza Lobby
-		Conexion conexion = new Conexion();
-		vSalas = conexion.actualizarLobby(new Mensaje(Parametro.ACTUALIZAR_LOBBY));
+		vSalas = Cliente.getConexion().actualizarLobby(new Mensaje(Parametro.ACTUALIZAR_LOBBY));
 
 		model = (DefaultTableModel) tablaDeSalas.getModel();
 
@@ -74,9 +74,8 @@ public class Lobby extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				int filaSeleccionada = tablaDeSalas.getSelectedRow();
-				Conexion conexion = new Conexion();
-				(conexion.UnirseSala(new Mensaje(Parametro.UNIRSE, persona, filaSeleccionada))).setVisible(true);
-
+				(Cliente.getConexion().UnirseSala(new Mensaje(Parametro.UNIRSE, persona, filaSeleccionada))).setVisible(true);
+				
 			}
 		});
 
@@ -88,8 +87,14 @@ public class Lobby extends JFrame {
 				String nombreSala = "";
 				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
 
-				Conexion conexion = new Conexion();
-				SalaEspera sala = conexion.crearSala(new Mensaje(Parametro.NUEVASALA, persona, nombreSala));
+				SalaEspera sala = Cliente.getConexion().crearSala(new Mensaje(Parametro.NUEVASALA, persona, nombreSala));
+				sala.setConexion(Cliente.getConexion());
+				SalaEsperaHilo hilo = new SalaEsperaHilo(Cliente.getConexion(), sala);
+				hilo.start();
+				
+				model = (DefaultTableModel) tablaDeSalas.getModel();	
+				model.addRow(sala.getList());	
+				model.fireTableDataChanged();
 
 			}
 		});

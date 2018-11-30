@@ -6,6 +6,6 @@ import ui.Multiplayer;
 
 public class MainCliente {
 	public static void main(String[] args) {
-		Multiplayer bienvenida = new Multiplayer();
+		Cliente cliente = new Cliente();
 	}
 }

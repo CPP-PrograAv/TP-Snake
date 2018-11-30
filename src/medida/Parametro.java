@@ -12,6 +12,8 @@ public class Parametro {
 	public static final int UNIRSE = 5;
 	public static final int EMPEZAR_JUEGO = 6;
 	
+	public static final int SE_UNIO_JUGADOR = 20;
+	public static final int SALIO_JUGADOR = 21;
 	
 	public static final int DUPLICADO = 10;
 	public static final int CAMPOS_VACIOS = 11;

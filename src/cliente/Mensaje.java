@@ -28,6 +28,7 @@ public class Mensaje implements Serializable {
 		this.dato = dato;
 	}
 
+	
 	public Mensaje(int cod, Object dato, String cadena) {
 
 		this.cod = cod;

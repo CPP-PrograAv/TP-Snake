@@ -12,11 +12,17 @@ import TecladoEvento.InputTeclado;
 import baseDeDatos.Persona;
 import medida.Medida;
 
+/**
+
+	SACAR EXIT PARA QUE NO ROMPA
+	
+*/
 public class Juego extends JFrame implements Runnable {
 
 	private int ANCHO = Medida.ANCHO;
 	private ObjectInputStream entrada;
 	private ObjectOutputStream salida;
+	
 	/**
 	 * el ultimo parametro es el Id de la snake, lo hardcodie porque el idgeneral de
 	 * GameObject no incrementaba, como son diferentes, puedo saber cuando se chocan
@@ -29,9 +35,9 @@ public class Juego extends JFrame implements Runnable {
 	private Tablero laminaJuego;
 	private JList<String> lista;
 	private JScrollPane scroll;
-	private Persona persona;
+	private Jugador persona;
 
-	public Juego(Persona persona) {
+	public Juego(Jugador persona) {
 		super("Game");
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,9 +92,7 @@ public class Juego extends JFrame implements Runnable {
 	}
 
 	private void añadirJugador() {
-
-		Jugador JugadorRobot = new Jugador(persona.getNick());
-		jugadores.add(JugadorRobot);
+		jugadores.add(persona);
 		laminaJuego.agregarSnake(jugadores.get(jugadores.size() - 1).getSnake());
 	}
 

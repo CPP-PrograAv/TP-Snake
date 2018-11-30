@@ -23,9 +23,10 @@ public class Servidor implements Runnable {
 	private Mensaje paqueteDatos;
 	private ArrayList<SalaEspera> vSalaEspera = new ArrayList<SalaEspera>();
 	private ArrayList<Jugador> vJugador = new ArrayList<Jugador>();
+	private ArrayList<Persona> vPersonas = new ArrayList<Persona>();
+
 
 	public Servidor() {
-
 		Thread hilo = new Thread(this);
 		hilo.start();
 	}
@@ -34,18 +35,19 @@ public class Servidor implements Runnable {
 	public void run() {
 
 		try {
+			
 			ServerSocket servidorIn = new ServerSocket(Parametro.PUERTO1);
 			ServerSocket servidorOut = new ServerSocket(Parametro.PUERTO2);
+			System.out.println("SERVIDOR INICIADO");
+			
+			Socket cliente = servidorIn.accept();
+			Socket clienteOut = servidorOut.accept();
 
+			entrada = new ObjectInputStream(cliente.getInputStream());
+			salida = new ObjectOutputStream(clienteOut.getOutputStream());
+			
 			while (true) {
-
-				System.out.println("SERVIDOR INICIADO");
-				Socket cliente = servidorIn.accept();
-				Socket clienteOut = servidorOut.accept();
-
-				entrada = new ObjectInputStream(cliente.getInputStream());
-				salida = new ObjectOutputStream(clienteOut.getOutputStream());
-
+				
 				paqueteDatos = (Mensaje) entrada.readObject();
 
 				switch (paqueteDatos.getCod()) {
@@ -61,10 +63,11 @@ public class Servidor implements Runnable {
 						perAux.setContraseña(persona2.get(0)[1].toString());
 						perAux.setNick(persona2.get(0)[2].toString());
 					}
+					
 					salida.flush();
 					salida.writeObject(perAux);
 
-					entrada.close();
+//					entrada.close();
 
 					break;
 
@@ -73,45 +76,54 @@ public class Servidor implements Runnable {
 					SalaEspera sala = new SalaEspera(paqueteDatos.getCadena(), persona,paqueteDatos.getTipoJuego(),paqueteDatos.getTipoModoFruta());
 					vSalaEspera.add(sala);
 					vJugador.add(new Jugador(persona.getNick()));
+					vPersonas.add(persona);
 					salida.flush();
 					salida.writeObject(sala);
-					entrada.close();
+//					entrada.close();
 					break;
 
 				case Parametro.REGISTRARSE:
 					persona = (Persona) paqueteDatos.getDato();
-					DAOServidor server = new DAOServidor();
-					int respuesta = server.realizarRegistro(persona);
+					DAOServidor daoserver1 = new DAOServidor();
+					int respuesta = daoserver1.realizarRegistro(persona);
 
 					salida.flush();
 					salida.writeObject(respuesta);
-					entrada.close();
+//					entrada.close();
 
 					break;
-
+				
+				case Parametro.SALIO_JUGADOR:
+					
+					persona = (Persona) paqueteDatos.getDato();
+					vPersonas.remove(persona);
+					salida.flush();
+					salida.writeObject(new Mensaje(Parametro.SALIO_JUGADOR,persona));
+					
+					break;
+					
 				case Parametro.ACTUALIZAR_LOBBY:
 
 					ArrayList<SalaEspera> salas = this.getvSalaEspera();
 					salida.flush();
 					salida.writeObject(salas);
-					entrada.close();
+//					entrada.close();
 
 					break;
 				case Parametro.UNIRSE:
-					vSalaEspera.get(paqueteDatos.getIndice()).añadirJugador((Persona) paqueteDatos.getDato());
+					persona = (Persona) paqueteDatos.getDato();
+					vSalaEspera.get(paqueteDatos.getIndice()).agregarJugador(persona);
 					salida.flush();
 					salida.writeObject(vSalaEspera.get(paqueteDatos.getIndice()));
-					entrada.close();
-					
+//					entrada.close();
+					vPersonas.add(persona);
 					break;
 					
 				case Parametro.EMPEZAR_JUEGO:
+					Juego juego = new Juego(vJugador.get(0));
+					new Thread(juego).start();
+					break;	
 					
-					
-					
-					
-					break;
-				
 				default:
 					break;
 				}
@@ -129,7 +141,6 @@ public class Servidor implements Runnable {
 	}
 
 	public static void main(String[] args) {
-
 		Servidor servidor = new Servidor();
 	}
 
