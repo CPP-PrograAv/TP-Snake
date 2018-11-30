@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,44 +10,75 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 
 import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.COUNT;
 
 import base.Juego;
 import base.Jugador;
 import baseDeDatos.Persona;
+import cliente.Conexion;
 
 public class SalaEspera extends JFrame {
 	private static int cont=0; 
-	private  int numSala;
+	private JPanel contentPane;
+	private int numSala;
 	private int cantJugadores;
 	private Object[] lista;
 	private JButton iniciar, salir;
 	private String nombreSala;
 	private ArrayList<Jugador> Vjugadores = new ArrayList<Jugador>();
-	private JLabel nombreJugador;
+	private JList<String > nickJugadores;
 	
+	
+//	public static void main(String[] args) {
+//		Persona persona = new Persona();
+//		persona.setNick("NICK...");
+//		
+//		SalaEspera sala = new SalaEspera("sala", persona);
+//	}
 	public SalaEspera(String nombreSala, Persona persona) {
-
 		
 		super(nombreSala);
-		Jugador jugador = new Jugador(persona.getNick());
-		Vjugadores.add(jugador);
 		this.nombreSala = nombreSala;
-		
-		nombreJugador = new JLabel(persona.getNick());
-		
 
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 300, 300);
+		setBounds(100, 100, 400, 400);
 		setLocationRelativeTo(null);
 
-		this.numSala = ++cont;
-		this.cantJugadores++;
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel players = new JLabel("Jugadores: ");
+		players.setBounds(20,10,100,20);
+		contentPane.add(players);
+		
+		nickJugadores = new JList<>();
+		nickJugadores.setBounds(20,40,150,200);
+		nickJugadores.setBorder(new BevelBorder(BevelBorder.RAISED, null, null,null, null));
+		contentPane.add(nickJugadores);
+		
+		JLabel adm = new JLabel(persona.getNick());
+		adm.setBounds(20,20,80,40);
+		nickJugadores.add(adm);
 
 		iniciar = new JButton("Iniciar");
-		add(iniciar, BorderLayout.NORTH);
+		iniciar.setBounds(250, 300, 80, 30 );
+		contentPane.add(iniciar, BorderLayout.NORTH);
+		
+		salir = new JButton("Salir");
+		salir.setBounds(160,300, 80, 30);
+		contentPane.add(salir, BorderLayout.SOUTH);
+	
+		Jugador jugador = new Jugador(persona.getNick());
+		Vjugadores.add(jugador);		
+		
+		this.numSala = ++cont;
+		this.cantJugadores++;
 
 		iniciar.addActionListener(new ActionListener() {
 
@@ -59,18 +91,18 @@ public class SalaEspera extends JFrame {
 		});
 
 		this.setVisible(true);
-		salir = new JButton("Salir");
-		add(salir, BorderLayout.SOUTH);
 
 		salir.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				Conexion conexion = new Conexion();
+				
 				cerrarVentana();
 			}
 		});
 		
-		add(nombreJugador,BorderLayout.CENTER);
 	}
 
 	protected void cerrarVentana() {
@@ -85,6 +117,11 @@ public class SalaEspera extends JFrame {
 
 	public void añadirJugador(Persona persona) {
 		Vjugadores.add(new Jugador(persona.getNick()));
+		
+		JLabel n = new JLabel(persona.getNick());
+		n.setBounds(20,50,80,20);
+		nickJugadores.add(n);
+		
 	}
 	public Object[] getList() {
 
