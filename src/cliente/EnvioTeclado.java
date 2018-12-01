@@ -7,7 +7,7 @@ import cliente.Conexion;
 import medida.*;
 
 public class EnvioTeclado extends Thread {
-	public int direccion = 0;
+	public int direccion = Medida.ESTE;
 	private Conexion conexion;
 	private KeyListener keyListener;
 	private boolean stop = false;

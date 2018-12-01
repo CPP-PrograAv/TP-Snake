@@ -1,6 +1,7 @@
 package base;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ import GameObjects.*;
 import cliente.Conexion;
 import medida.Medida;
 
-public class Tablero extends JPanel {
+public class Tablero extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,9 +21,9 @@ public class Tablero extends JPanel {
 	private int BORDE = Medida.BORDE;
 
 	// Variables para controlar el juego
-	public static GameObject tablero[][] = new GameObject[Medida.SIZE_MATRIZ][Medida.SIZE_MATRIZ];
-	public static ArrayList<Snake> viboritas = new ArrayList<Snake>();
-	public static int matriz[][] = new int[Medida.ANCHO / Medida.SIZE][Medida.LARGO / Medida.SIZE];
+	public GameObject tablero[][] = new GameObject[Medida.SIZE_MATRIZ][Medida.SIZE_MATRIZ];
+	public ArrayList<Snake> viboritas = new ArrayList<Snake>();
+	public int matriz[][] = new int[Medida.ANCHO / Medida.SIZE][Medida.LARGO / Medida.SIZE];
 	public static int size = Medida.SIZE;
 
 	public static int cantidadFruta = 4; // Manejo la cantidad que estara siempre en el tablero
@@ -52,16 +53,29 @@ public class Tablero extends JPanel {
 			j.snake.setPosY(y);
 		}
 	}
-
+	
+	public void setSnakes(ArrayList<Jugador> jugadores) {
+		Random ran = new Random();
+		for (Jugador j : jugadores) {
+			int x,y;
+			do{
+				x = Math.abs(ran.nextInt(Medida.SIZE_MATRIZ-2))+1;
+				y = Math.abs(ran.nextInt(Medida.SIZE_MATRIZ-2))+1;
+			}while(tablero[x][y]!=null);
+			
+			j.snake.setPosX(x);
+			j.snake.setPosY(y);
+		}
+	}
 	public void agregarObstaculo() {
 		for (int i = 0; i < 8; i++) {
-			obstaculos.add(new Obstaculo());
+			obstaculos.add(new Obstaculo(this));
 		}
 	}
 
 	private void agregarFruta() {
 		for (int i = 0; i < cantidadFruta; i++)
-			new Fruta();
+			new Fruta(this);
 		System.out.println(Fruta.cantidad);
 	}
 
@@ -90,7 +104,7 @@ public class Tablero extends JPanel {
 
 	private void verificarColisiones() {
 		for (int i = 0; i < viboritas.size(); i++) {
-			GameObject colisionado = Colision.colisionTablero(viboritas.get(i));
+			GameObject colisionado = Colision.colisionTablero(viboritas.get(i),this);
 			if (colisionado != null)
 				colisionado.accionColision(viboritas.get(i));
 			if (i > 0 && viboritas.get(i).getMuerto() == true) {

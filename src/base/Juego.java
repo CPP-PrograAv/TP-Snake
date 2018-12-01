@@ -4,99 +4,80 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.*;
 import javax.swing.*;
 
+import GameObjects.Snake;
 import TecladoEvento.InputTeclado;
 import baseDeDatos.Persona;
 import medida.Medida;
+import servidor.EscuchaCliente;
 
 /**
-
-	SACAR EXIT PARA QUE NO ROMPA
-	
-*/
-public class Juego extends JFrame implements Runnable {
-
+ * SACAR EXIT PARA QUE NO ROMPA
+ */
+public class Juego extends Thread implements Serializable {
+	private static int id = 0;
 	private int ANCHO = Medida.ANCHO;
-	
-	/**
-	 * el ultimo parametro es el Id de la snake, lo hardcodie porque el idgeneral de
-	 * GameObject no incrementaba, como son diferentes, puedo saber cuando se chocan
-	 * snake
-	 */
-
-	private InputTeclado inputTeclado;
 	private ArrayList<Jugador> jugadores = new ArrayList<>();
 	private JPanel contentPane, panelpuntaje;
 	private Tablero laminaJuego;
 	private JList<String> lista;
 	private JScrollPane scroll;
-	private Jugador persona;
+	private boolean enJuego = true;
 
 	public Juego(Jugador persona) {
 		super("Game");
 		construirVentana();
-		inputTeclado = new InputTeclado();
-		this.addKeyListener(inputTeclado);
-		setFocusable(true);
-		setVisible(true);
-
 		// AGREGAR JUGADORES
 		añadirJugador();
 		añadirJugadorBot(120, 300);
-
 	}
 
 	public Juego() {
 		super("Game");
 		construirVentana();
 	}
-	
+
 	public void agregarJugador(Jugador jugador) {
+		jugador.setSnake(new Snake(2, 2, id++, Color.BLUE, laminaJuego));
 		jugadores.add(jugador);
 	}
 
 	private void añadirJugador() {
-
-		Jugador JugadorRobot = new Jugador(persona.getNombre(),persona.getPuntaje());
+		Jugador JugadorRobot = new Jugador("BOT", 0);
 		jugadores.add(JugadorRobot);
 		laminaJuego.agregarSnake(jugadores.get(jugadores.size() - 1).getSnake());
 	}
 
 	private void añadirJugadorBot(int x, int y) {
-		Jugador JugadorDefecto = new Jugador("BOT", x, y);
+		Jugador JugadorDefecto = new Jugador("BOT", x, y, laminaJuego);
 		jugadores.add(JugadorDefecto);
 		laminaJuego.agregarSnake(jugadores.get(jugadores.size() - 1).getSnake());
 	}
 
-	
-
 	@Override
 	public void run() {
-
+		laminaJuego.setSnakes(jugadores);
 		long nextGameTick = System.currentTimeMillis();
 		long sleepTime = 0;
 
-		while(true) {
-		laminaJuego.actualizar();
-		lista.setModel(modelList());
+		while (enJuego) {
+			laminaJuego.actualizar();
+			lista.setModel(modelList());
 
-		// FPS
-		nextGameTick += Medida.SKIP_TICKS;
-		sleepTime = nextGameTick - System.currentTimeMillis();
-
-		if (sleepTime >= 0) {
-
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				e.getMessage();
-				System.out.println("ERROR SLEEP");
+			// FPS
+			nextGameTick += Medida.SKIP_TICKS;
+			sleepTime = nextGameTick - System.currentTimeMillis();
+			if (sleepTime >= 0) {
+				try {
+					Thread.sleep(sleepTime);
+				} catch (InterruptedException e) {
+					e.getMessage();
+				}
 			}
-		} else
-			System.out.println("NO LLEGUE AL FPS");
 		}
 	}
 
@@ -131,16 +112,12 @@ public class Juego extends JFrame implements Runnable {
 		res += String.format("%0" + cantidadNumeros + "d", nume);
 		return res;
 	}
-	
+
 	private void construirVentana() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, Medida.ANCHO_VENTANA, Medida.LARGO_VENTANA);
-		this.setLocationRelativeTo(null);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		contentPane.setLayout(null);
-		this.setContentPane(contentPane);
 
 		laminaJuego = new Tablero();
 		laminaJuego.setBounds(ANCHO / 4, 0, Medida.ANCHO_VENTANA, Medida.LARGO_VENTANA);
@@ -172,13 +149,26 @@ public class Juego extends JFrame implements Runnable {
 
 		contentPane.add(panelpuntaje);
 		// seTFocusable para que maneje los inputs dentro del panel
-		setFocusable(true);
+
 	}
+
 	public Tablero getTablero() {
 		return laminaJuego;
 	}
 
 	public JList<String> getJList() {
 		return lista;
+	}
+
+	public boolean getEnJuego() {
+		return enJuego;
+	}
+
+	public synchronized void move(String nick, int dir) {
+		for (int i = 0; i < jugadores.size(); i++) {
+			if (jugadores.get(i).getNombre().equals(nick)) {
+				jugadores.get(i).getSnake().setDireccion(dir);
+			}
+		}
 	}
 }

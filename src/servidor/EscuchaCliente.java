@@ -3,6 +3,7 @@ package servidor;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class EscuchaCliente extends Thread {
 	private ObjectInputStream entrada;
 	private ObjectOutputStream salida;
 	private int datosTeclado;
-	private Tablero laminaJuego;
+	private Juego juego = null;
 	private Persona persona;
 	private Mensaje paqueteDatos;
 	private Integer numSala = null;
@@ -134,12 +135,19 @@ public class EscuchaCliente extends Thread {
 
 				case Parametro.EMPEZAR_JUEGO:
 					clientesEnSala = server.getClientesSala(numSala);
-					Juego juego = new Juego();
+					juego = new Juego();
+					
 					for (EscuchaCliente ec : clientesEnSala) {
 						juego.agregarJugador(new Jugador(ec.getName(), 0));
+						ec.setJuego(juego);
 						ec.salida.flush();
 						ec.salida.writeObject(new Mensaje(Parametro.EMPEZAR_JUEGO, juego));
+						HiloRespuestaJuego hRJ = new HiloRespuestaJuego(ec, juego);
+						hRJ.start();
 					}
+					juego.start();
+					
+					
 					break;
 				case Parametro.SOLICITAR_SALA:
 					int num = server.solicitarIndiceSala();
@@ -147,12 +155,28 @@ public class EscuchaCliente extends Thread {
 					salida.flush();
 					salida.writeObject(num);
 					break;
+				case Parametro.MOVIMIENTO:
+					juego.move(this.persona.getNick(),(int) paqueteDatos.getDato());
+					break;
 				default:
 					break;
 				}
 			} catch (IOException | ClassNotFoundException ex) {
 				ex.printStackTrace();
 			}
+		}
+	}
+
+	private void setJuego(Juego juego) {
+		this.juego = juego;
+	}
+
+	public synchronized void actualizarJuego(Juego juego) {
+		try {
+			salida.flush();
+			salida.writeObject(new Mensaje(Parametro.ACTUALIZAR_JUEGO, juego));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

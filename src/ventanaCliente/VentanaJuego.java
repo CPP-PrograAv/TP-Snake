@@ -66,10 +66,13 @@ public class VentanaJuego extends JFrame {
 		panelpuntaje.add(scroll);
 
 		contentPane.add(panelpuntaje);
+		setFocusable(true);
+		
 	}
 
 	public void setJuego(Juego juego) {
 		laminaJuego.setTablero(juego.getTablero().tablero);
 		lista = juego.getJList();
+		repaint();
 	}
 }

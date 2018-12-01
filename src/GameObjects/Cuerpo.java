@@ -5,26 +5,30 @@ import base.*;
 import medida.*;
 
 public class Cuerpo extends GameObject  {
-
+	private Tablero tablero;
 	private Punto ubicacion;
 
-	public Cuerpo() {
-		super(new Punto(1, 1), 99);// ponerlo atras de todo
+	public Cuerpo(Tablero tablero) {
+		super(new Punto(1, 1), 99, tablero);// ponerlo atras de todo
+		this.tablero=tablero;
 	}
 
-	public Cuerpo(Punto punto) {
-		super(new Punto(punto.getX() , punto.getY()), 99);
-		Tablero.matriz[punto.getX() ][punto.getY()] = 0;
-		Tablero.tablero[punto.getX() ][punto.getY()] = null;
-
+	public Cuerpo(Punto punto, Tablero tablero) {
+		super(new Punto(punto.getX() , punto.getY()), 99, tablero);
+		tablero.matriz[punto.getX() ][punto.getY()] = 0;
+		tablero.tablero[punto.getX() ][punto.getY()] = null;
+		this.tablero = tablero;
 	}
 
-	public Cuerpo(Punto ubicacion, int id) {
-		super(ubicacion, id);
+	public Cuerpo(Punto ubicacion, int id, Tablero tablero) {
+		super(ubicacion, id, tablero);
+		this.tablero = tablero;
 	}
 
-	public Cuerpo(int x, int y) {
-		super(new Punto(x, y), 1);
+	public Cuerpo(int x, int y, Tablero tablero) {
+		super(new Punto(x, y), 1, tablero);
+		this.tablero = tablero;
+
 	}
 
 	public Punto getUbicacion() {

@@ -17,13 +17,11 @@ public class Jugador implements Comparable<Jugador>,Serializable{
 	Snake snake;
 
 	public Jugador(String nombreJugador,int puntaje) {
-		snake = new Snake(80 / size, 80 / size, ++idGenral, Color.RED);
 		this.nombreJugador = nombreJugador;
-		snake.setPuntaje(puntaje);
 	}
 
-	public Jugador(String nombreJugador, int x, int y) {
-		snake = new Snake(x / size, y / size, ++idGenral, Color.BLUE);
+	public Jugador(String nombreJugador, int x, int y, Tablero tablero) {
+		snake = new Snake(x / size, y / size, ++idGenral, Color.BLUE, tablero);
 		this.nombreJugador = nombreJugador;
 	}
 
@@ -41,6 +39,7 @@ public class Jugador implements Comparable<Jugador>,Serializable{
 
 	public void setSnake(Snake snake) {
 		this.snake = snake;
+		this.snake.setPuntaje(puntaje);
 	}
 
 	public String getNombre() {

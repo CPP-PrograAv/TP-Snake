@@ -6,23 +6,25 @@ import java.io.Serializable;
 import base.*;
 import medida.Medida;
 
-public abstract class GameObject implements Serializable{
-
+public abstract class GameObject implements Serializable {
+	private Tablero tablero;
 	private Punto ubicacion;
 	private int size;
 	protected static int idgeneral = 0;
 
-	public GameObject(int s) {
+	public GameObject(int s, Tablero tablero) {
 		this.ubicacion.setPunto(1, 1);
 		this.size = s;
+		this.tablero = tablero;
 	}
 
-	public GameObject(Punto ubicacion, int ID) {
+	public GameObject(Punto ubicacion, int ID,Tablero tablero) {
 		this.ubicacion = ubicacion;
-		Tablero.matriz[ubicacion.getX()][ubicacion.getY()] = ID;
-		Tablero.tablero[ubicacion.getX()][ubicacion.getY()] = this;
+		this.tablero = tablero;
+		tablero.matriz[ubicacion.getX()][ubicacion.getY()] = ID;
+		tablero.tablero[ubicacion.getX()][ubicacion.getY()] = this;
 	}
-	
+
 	public void paint(Graphics2D g2d) {
 		int padding = Medida.BORDE / 2;
 		g2d.fillRect(getPosX() * size + 1 + padding, getPosY() * size + 1 + padding, size - 2, size - 2);
@@ -33,21 +35,21 @@ public abstract class GameObject implements Serializable{
 	}
 
 	public void setPosition(int posX, int posY, int ID) {
-		if (Tablero.tablero[getPosX()][getPosY()] == this)
-			Tablero.tablero[getPosX()][getPosY()] = null;
+		if (tablero.tablero[getPosX()][getPosY()] == this)
+			tablero.tablero[getPosX()][getPosY()] = null;
 		this.ubicacion.setX(posX);
 		this.ubicacion.setY(posY);
-		Tablero.matriz[posX][posY] = ID;
-		Tablero.tablero[posX][posY] = this;
+		tablero.matriz[posX][posY] = ID;
+		tablero.tablero[posX][posY] = this;
 	}
 
 	public void setPosition(Punto p, int ID) {
-		if (Tablero.tablero[getPosX()][getPosY()] == this)
-			Tablero.tablero[getPosX()][getPosY()] = null;
+		if (tablero.tablero[getPosX()][getPosY()] == this)
+			tablero.tablero[getPosX()][getPosY()] = null;
 		this.ubicacion.setX(p.getX());
 		this.ubicacion.setY(p.getY());
-		Tablero.matriz[p.getX()][p.getY()] = ID;
-		Tablero.tablero[p.getX()][p.getY()] = this;
+		tablero.matriz[p.getX()][p.getY()] = ID;
+		tablero.tablero[p.getX()][p.getY()] = this;
 	}
 
 	public int getPosX() {

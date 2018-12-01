@@ -39,7 +39,7 @@ public class Colision {
 	 * @param s
 	 * @return objeto colisionado, si no null
 	 */
-	public static GameObject colisionTablero(Snake s) {
+	public static GameObject colisionTablero(Snake s, Tablero tablero) {
 		int x = s.getPosX(), y = s.getPosY(), dir = s.getDireccion();
 		GameObject colisionado = null;
 		
@@ -53,7 +53,7 @@ public class Colision {
 				y = 0;
 			else
 				y += dir;
-			colisionado = Tablero.tablero[x][y];// en el siguiente espacio hay
+			colisionado = tablero.tablero[x][y];// en el siguiente espacio hay
 			if (colisionado != null) {// si hay algo
 				return colisionado;
 			}
@@ -62,7 +62,7 @@ public class Colision {
 				x = 0;
 			else
 				x += 1;
-			colisionado = Tablero.tablero[x][y];
+			colisionado = tablero.tablero[x][y];
 			if (colisionado != null && colisionado instanceof Snake && // si hay una serpiente y
 					((Snake) colisionado).getDireccion() == Medida.OESTE) {// se mueve hacia mi bloque
 				return colisionado;
@@ -74,7 +74,7 @@ public class Colision {
 				x = Medida.ANCHO / Medida.SIZE - 1;
 			else
 				x -= 2;
-			colisionado = Tablero.tablero[x][y];
+			colisionado = tablero.tablero[x][y];
 			if (colisionado != null && colisionado instanceof Snake && // si hay una serpiente y
 					((Snake) colisionado).getDireccion() == Medida.ESTE) {// se mueve hacia mi bloque
 				return colisionado;
@@ -90,7 +90,7 @@ public class Colision {
 				x = 0;
 			else
 				x += 1;
-			colisionado = Tablero.tablero[x][y];
+			colisionado = tablero.tablero[x][y];
 			if (colisionado != null && colisionado instanceof Snake && // Si hay una serpiente y
 					((Snake) colisionado).getDireccion() == -dir) {// se mueve hacia mi bloque
 				return colisionado;
@@ -102,7 +102,7 @@ public class Colision {
 				x = Medida.ANCHO / Medida.SIZE - 1;
 			else
 				x += (dir / 2);
-			colisionado = Tablero.tablero[x][y];// en el siguiente espacio hay
+			colisionado = tablero.tablero[x][y];// en el siguiente espacio hay
 			if (colisionado != null) {// si hay algo
 				return colisionado;
 			}
@@ -111,7 +111,7 @@ public class Colision {
 				y = 0;
 			else
 				y += 1;
-			colisionado = Tablero.tablero[x][y];
+			colisionado = tablero.tablero[x][y];
 			if (colisionado != null && colisionado instanceof Snake && // si hay una serpiente y
 					((Snake) colisionado).getDireccion() == Medida.NORTE) {// se mueve hacia mi bloque
 				return colisionado;
@@ -123,7 +123,7 @@ public class Colision {
 				y = Medida.LARGO / Medida.SIZE - 1;
 			else
 				y -= 2;
-			colisionado = Tablero.tablero[x][y];
+			colisionado = tablero.tablero[x][y];
 			if (colisionado != null && colisionado instanceof Snake && // si hay una serpiente y
 					((Snake) colisionado).getDireccion() == Medida.SUR) {// se mueve hacia mi bloque
 				return colisionado;
@@ -139,7 +139,7 @@ public class Colision {
 				y = 0;
 			else
 				y += 1;
-			colisionado = Tablero.tablero[x][y];
+			colisionado = tablero.tablero[x][y];
 			if (colisionado != null && colisionado instanceof Snake && // Si hay una serpiente y
 					((Snake) colisionado).getDireccion() == -dir) {// se mueve hacia mi bloque
 				return colisionado;

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import base.*;
 import medida.*;
 
-public class Snake extends GameObject  {
-
+public class Snake extends GameObject {
+	private Tablero tablero;
 	private static int ID = ++idgeneral;
 	protected static int IDcuerpo = 99;// para darle un id a los cuerpos
 	private int idSnake;
@@ -18,21 +18,20 @@ public class Snake extends GameObject  {
 	private ArrayList<Cuerpo> cuerpos = new ArrayList<Cuerpo>();
 	private Color color;
 
-	
-	public Snake(int posX, int posY, int id, Color color) {
-		super(new Punto(posX, posY), id);
-		cuerpos.add(new Cuerpo(new Punto(posX - 1, posY), IDcuerpo));// 3, 4, 20, ID
+	public Snake(int posX, int posY, int id, Color color, Tablero tablero) {
+		super(new Punto(posX, posY), id, tablero);
+		this.tablero = tablero;
+		cuerpos.add(new Cuerpo(new Punto(posX - 1, posY), IDcuerpo, tablero));// 3, 4, 20, ID
 		idSnake = id;
 		direccion = 1;// set
 		this.color = color;
 	}
 
-	
-
-	public Snake(int posX, int posY, int id, int longitud) {
-		super(new Punto(posX, posY), id);
+	public Snake(int posX, int posY, int id, int longitud, Tablero tablero) {
+		super(new Punto(posX, posY), id, tablero);
+		this.tablero = tablero;
 		for (int i = 0; i < longitud; i++)
-			cuerpos.add(new Cuerpo(new Punto(posX - i, posY), IDcuerpo));// 3, 4, 20, ID
+			cuerpos.add(new Cuerpo(new Punto(posX - i, posY), IDcuerpo,tablero));// 3, 4, 20, ID
 		idSnake = id;
 
 	}
@@ -55,7 +54,7 @@ public class Snake extends GameObject  {
 
 		}
 		// muevo la cabeza y verifico los límites
-		
+
 		switch (direccion) {
 		case Medida.NORTE:
 			if (getPosY() - 1 < 0)
@@ -88,17 +87,16 @@ public class Snake extends GameObject  {
 	 * Añade un cuerpo al final
 	 */
 	public void crecer() {
-		cuerpos.add(new Cuerpo(cuerpos.get(cuerpos.size() - 1).getPosition()));
+		cuerpos.add(new Cuerpo(cuerpos.get(cuerpos.size() - 1).getPosition(), tablero));
 		puntaje++;
 	}
 
-	
 	public void morir() {
 
 		muerto = true;
-		new Fruta(new Punto(this.getPosX(), this.getPosY()));
+		new Fruta(new Punto(this.getPosX(), this.getPosY()), tablero);
 		for (int i = 0; i < cuerpos.size(); i++) {
-			new Fruta(new Punto(cuerpos.get(i).getPosX(), cuerpos.get(i).getPosY()));
+			new Fruta(new Punto(cuerpos.get(i).getPosX(), cuerpos.get(i).getPosY()), tablero);
 		}
 
 		cuerpos.clear();
@@ -167,8 +165,6 @@ public class Snake extends GameObject  {
 	public void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
 	}
-
-
 
 	@Override
 	public void accionColision(Snake snake) {

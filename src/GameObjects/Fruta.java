@@ -5,17 +5,18 @@ import base.*;
 import medida.*;
 
 public class Fruta extends GameObject {
-
+	private Tablero tablero;
 	public static int IdItem = -1;
 	public static int cantidad = 0; // lo utilizo para controlar la cantidad permitida que debe haber en el tablero
 
-	public Fruta() {
-		super(ubicar(), IdItem);
+	public Fruta(Tablero tablero) {
+		super(ubicar(tablero), IdItem, tablero);
 		cantidad++;
+		this.tablero = tablero;
 	}
 
-	public Fruta(Punto punto) {
-		super(punto, IdItem);
+	public Fruta(Punto punto, Tablero tablero) {
+		super(punto, IdItem, tablero);
 		cantidad++;
 	}
 
@@ -26,11 +27,11 @@ public class Fruta extends GameObject {
 
 	public void setItem() {
 
-		Tablero.matriz[getPosX()][getPosY()] = 0;
-		Tablero.tablero[getPosX()][getPosY()] = null;
+		tablero.matriz[getPosX()][getPosY()] = 0;
+		tablero.tablero[getPosX()][getPosY()] = null;
 
 		if (cantidad < Tablero.cantidadFruta) {
-			setPosition(ubicar(), IdItem);
+			setPosition(ubicar(tablero), IdItem);
 			cantidad++;
 		}
 
@@ -51,13 +52,13 @@ public class Fruta extends GameObject {
 	 * 
 	 * @return Punto
 	 */
-	public static Punto ubicar() {
+	public static Punto ubicar(Tablero tablero) {
 		Punto p1;
 		do {
 			p1 = new Punto((int) (Math.random() * (Medida.ANCHO / Medida.SIZE - 1)),
 					(int) (Math.random() * (Medida.LARGO / Medida.SIZE - 1)));
 			// Si no encuentro lugar me quedo generando un punto donde haya
-		} while (Tablero.matriz[p1.getX()][p1.getY()] != 0 || Tablero.tablero[p1.getX()][p1.getY()] != null);
+		} while (tablero.matriz[p1.getX()][p1.getY()] != 0 || tablero.tablero[p1.getX()][p1.getY()] != null);
 		return p1;
 	}
 
