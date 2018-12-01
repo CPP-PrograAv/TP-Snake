@@ -125,7 +125,8 @@ public class Conexion {
 			salida.flush();
 			salida.writeObject(paqueteDatos);
 
-			SalaEspera sala = (SalaEspera) entrada.readObject();
+			Mensaje msj = (Mensaje) entrada.readObject();
+			SalaEspera sala = (SalaEspera) msj.getDato();
 			return sala;
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();

@@ -35,7 +35,7 @@ public class SalaEsperaHilo extends Thread {
 				sala.sacarJugador((Persona) msj.getDato());
 				break;
 			case Parametro.SE_UNIO_JUGADOR:
-				sala.agregarJugador((Persona) msj.getDato());
+				sala.agregarJugador((Persona) msj.getDatoAux());
 				break;
 			case Parametro.EMPEZAR_JUEGO:
 				//VisualizadorJuego O Juego "Cliente"

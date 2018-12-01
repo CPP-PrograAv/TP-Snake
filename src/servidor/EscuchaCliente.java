@@ -124,7 +124,9 @@ public class EscuchaCliente extends Thread {
 
 					for (EscuchaCliente ec : clientesEnSala) {
 						ec.salida.flush();
-						ec.salida.writeObject(server.getSala(paqueteDatos.getIndice()));
+						ec.salida.writeObject(new Mensaje(Parametro.SE_UNIO_JUGADOR,
+								server.getSala(paqueteDatos.getIndice()), ec.persona));
+						// ec.salida.writeObject(new Mensaje(Parametro.SE_UNIO_JUGADOR, ec.persona));
 					}
 					server.agregarListaPersonas(persona);
 					server.agregarListaJugador(new Jugador(persona.getNick(), persona.getPuntaje()));
@@ -134,9 +136,9 @@ public class EscuchaCliente extends Thread {
 					clientesEnSala = server.getClientesSala(numSala);
 					Juego juego = new Juego();
 					for (EscuchaCliente ec : clientesEnSala) {
-						juego.agregarJugador(new Jugador(ec.getName(),0));
+						juego.agregarJugador(new Jugador(ec.getName(), 0));
 						ec.salida.flush();
-						ec.salida.writeObject(new Mensaje(Parametro.EMPEZAR_JUEGO,juego));
+						ec.salida.writeObject(new Mensaje(Parametro.EMPEZAR_JUEGO, juego));
 					}
 					break;
 				case Parametro.SOLICITAR_SALA:

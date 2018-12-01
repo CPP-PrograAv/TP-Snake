@@ -86,8 +86,14 @@ public class Lobby extends JFrame {
 				
 				if(filaSeleccionada==-1)
 					JOptionPane.showMessageDialog(null, "Debe seleccionar una sala...");
-				else
-					(Cliente.getConexion().UnirseSala(new Mensaje(Parametro.UNIRSE, persona, numeroSala))).setVisible(true);
+				else {
+					Conexion con = Cliente.getConexion();
+					SalaEspera sala = con.UnirseSala(new Mensaje(Parametro.UNIRSE, persona, numeroSala));
+					SalaEsperaHilo hilo = new SalaEsperaHilo(con, sala);
+					hilo.start();
+					sala.setVisible(true);
+				}
+					
 			}
 		});
 
