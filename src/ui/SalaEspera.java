@@ -25,7 +25,6 @@ import cliente.Mensaje;
 import medida.Parametro;
 
 public class SalaEspera extends JFrame {
-	private static int cont = 0;
 	private JPanel contentPane;
 	private int numSala;
 	private int cantJugadores;
@@ -44,7 +43,7 @@ public class SalaEspera extends JFrame {
 //		
 //	}
 
-	public SalaEspera(String nombreSala, Persona persona) {
+	public SalaEspera(String nombreSala, Persona persona,int numSala) {
 
 		super(nombreSala);
 		this.nombreSala = nombreSala;
@@ -99,7 +98,7 @@ public class SalaEspera extends JFrame {
 		Jugador jugador = new Jugador(persona.getNick(), persona.getPuntaje());
 		Vjugadores.add(jugador);
 
-		this.numSala = ++cont;
+		this.numSala = numSala;
 		this.cantJugadores++;
 
 		iniciar.addActionListener(new ActionListener() {
@@ -155,7 +154,6 @@ public class SalaEspera extends JFrame {
 	public void agregarJugador(Persona persona) {
 		Vjugadores.add(new Jugador(persona.getNick(), persona.getPuntaje()));
 		JLabel n = new JLabel(persona.getNick());
-		n.setBounds(20, 50, 80, 20);
 		nickJugadores.add(n);
 	}
 
@@ -176,5 +174,6 @@ public class SalaEspera extends JFrame {
 	public String getNombreSala() {
 		return nombreSala;
 	}
+	
 
 }

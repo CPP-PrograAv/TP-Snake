@@ -67,8 +67,8 @@ public class Conexion {
 			salida.flush();
 			salida.writeObject(paqueteDatos);
 			boolean flag = (boolean) entrada.readObject();
-			System.out.println("FLAG "+ flag);
-			return  flag;
+			System.out.println("FLAG " + flag);
+			return flag;
 
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -137,6 +137,22 @@ public class Conexion {
 		}
 
 		return true;
+	}
+
+	public Integer obtenerIndiceSala() {
+//		Mensaje paqueteRecibido;
+		try {
+			salida.flush();
+			salida.writeObject(new Mensaje(Parametro.SOLICITAR_SALA));
+
+			int num = (int) entrada.readObject();
+//			return (int) paqueteRecibido.getDato();
+			return num;
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 }

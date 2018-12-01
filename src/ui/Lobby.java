@@ -95,7 +95,7 @@ public class Lobby extends JFrame {
 				String nombreSala = "";
 				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
 
-				SalaEspera sala = new SalaEspera(nombreSala, persona);
+				SalaEspera sala = new SalaEspera(nombreSala, persona,(int)(Cliente.getConexion().obtenerIndiceSala()));
 				Cliente.getConexion().crearSala(new Mensaje(Parametro.NUEVASALA, sala, persona));
 				SalaEsperaHilo hilo = new SalaEsperaHilo(Cliente.getConexion(), sala);
 				hilo.start();
