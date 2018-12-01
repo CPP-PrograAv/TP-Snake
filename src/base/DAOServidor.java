@@ -72,10 +72,9 @@ public class DAOServidor extends DAO {
 			return Parametro.DUPLICADO; // duplicado..
 		else {
 			try {
-			session.save(persona);
-			tx.commit();
-			}
-			catch (HibernateException e) {
+				session.save(persona);
+				tx.commit();
+			} catch (HibernateException e) {
 				if (tx != null)
 					tx.rollback();
 				e.printStackTrace();
@@ -83,8 +82,34 @@ public class DAOServidor extends DAO {
 			return Parametro.EXITO_REG;
 		}
 	}
-	
-	
+
+	public boolean actualizarPuntaje(Persona user) {
+
+		Session session = factory.openSession();
+		Transaction tx = session.beginTransaction();
+		boolean respuesta = true;
+		try {
+
+			//user.getPuntaje tiene el acumulado...
+			String consulta = "Update Persona Set puntaje = " + user.getPuntaje() + "Where mail = " + "'"
+					+ user.getMail() + "'";
+			Query q = session.createQuery(consulta);
+			q.executeUpdate();
+
+			tx.commit();
+
+		} catch (HibernateException e) {
+			respuesta = false;
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+			factory.close();
+		}
+
+		return respuesta;
+	}
 
 }
 /* Manejo las consultas de datos con hibernate */
