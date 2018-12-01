@@ -26,6 +26,7 @@ public class Lobby extends JFrame {
 	private JScrollPane scroll;
 	private HashMap<Integer, SalaEspera> hSalas = new HashMap<>();
 	private DefaultTableModel model;
+	private JButton actualizarSalas;
 
 	public Lobby(Persona persona) {
 		super("-- Lobby --");
@@ -38,10 +39,12 @@ public class Lobby extends JFrame {
 
 		crearSala = new JButton("Crear Sala");
 		unirse = new JButton("Unirse");
+		actualizarSalas = new JButton("actualizar");
 
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 
+		panel1.add(unirse);
 		// creo un modelo de tabla por defaul, que recibe la data que contiene,
 		// encabezado.
 		DefaultTableModel modeloTabla = new DefaultTableModel(new Object[][] {}, encabezado);
@@ -61,30 +64,36 @@ public class Lobby extends JFrame {
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		// Actualiza Lobby
-		hSalas = Cliente.getConexion().actualizarLobby(new Mensaje(Parametro.ACTUALIZAR_LOBBY));
 
-		model = (DefaultTableModel) tablaDeSalas.getModel();
+		actualizarSalas.addActionListener(new ActionListener() {
 
-		for (Integer key : hSalas.keySet())
-		model.addRow(hSalas.get(key).getList());
-		model.fireTableDataChanged();
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-		
-		panel1.add(unirse);
+				hSalas = Cliente.getConexion().actualizarLobby(new Mensaje(Parametro.ACTUALIZAR_LOBBY));
+				model = (DefaultTableModel) tablaDeSalas.getModel();
+
+				for (Integer key : hSalas.keySet())
+					model.addRow(hSalas.get(key).getList());
+				model.fireTableDataChanged();
+			}
+		});
+
 		panel1.add(crearSala);
+		panel1.add(actualizarSalas);
 		add(panel1, BorderLayout.NORTH);
 		add(panel2);
 		add(scroll);
 		setVisible(true);
-		
+
 		unirse.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int filaSeleccionada = tablaDeSalas.getSelectedRow();
-				int numeroSala =(int) model.getValueAt(filaSeleccionada,0);
-				
-				if(filaSeleccionada==-1)
+				int numeroSala = (int) model.getValueAt(filaSeleccionada, 0);
+
+				if (filaSeleccionada == -1)
 					JOptionPane.showMessageDialog(null, "Debe seleccionar una sala...");
 				else {
 					Conexion con = Cliente.getConexion();
@@ -93,7 +102,7 @@ public class Lobby extends JFrame {
 					hilo.start();
 					sala.setVisible(true);
 				}
-					
+
 			}
 		});
 
@@ -104,13 +113,14 @@ public class Lobby extends JFrame {
 				String nombreSala = "";
 				nombreSala = JOptionPane.showInputDialog(null, "Ingrese el nombre de la sala");
 
-				SalaEspera sala = new SalaEspera(nombreSala, persona,(int)(Cliente.getConexion().obtenerIndiceSala()));
+				SalaEspera sala = new SalaEspera(nombreSala, persona,
+						(int) (Cliente.getConexion().obtenerIndiceSala()));
 				Cliente.getConexion().crearSala(new Mensaje(Parametro.NUEVASALA, sala, persona));
 				SalaEsperaHilo hilo = new SalaEsperaHilo(Cliente.getConexion(), sala);
 				hilo.start();
-				
-				model = (DefaultTableModel) tablaDeSalas.getModel();	
-				model.addRow(sala.getList());	
+
+				model = (DefaultTableModel) tablaDeSalas.getModel();
+				model.addRow(sala.getList());
 				model.fireTableDataChanged();
 
 			}

@@ -143,6 +143,8 @@ public class EscuchaCliente extends Thread {
 						ec.salida.flush();
 						ec.salida.writeObject(new Mensaje(Parametro.EMPEZAR_JUEGO, juego));
 					}
+					Thread hilo = new Thread(juego);
+					hilo.start();
 					break;
 				case Parametro.SOLICITAR_SALA:
 					int num = server.solicitarIndiceSala();
