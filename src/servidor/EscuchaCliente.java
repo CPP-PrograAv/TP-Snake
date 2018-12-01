@@ -99,6 +99,7 @@ public class EscuchaCliente extends Thread {
 					server.removerListaPersonas(persona);
 					server.removerClienteDeSala(numSala, this);
 					clientesEnSala = server.getClientesSala(numSala);
+				
 					for (EscuchaCliente ec : clientesEnSala) {
 						ec.salida.flush();
 						ec.salida.writeObject(new Mensaje(Parametro.SALIO_JUGADOR, ec.persona));
@@ -124,7 +125,8 @@ public class EscuchaCliente extends Thread {
 
 					for (EscuchaCliente ec : clientesEnSala) {
 						ec.salida.flush();
-						ec.salida.writeObject(server.getSala(paqueteDatos.getIndice()));
+						ec.salida.writeObject(new Mensaje(Parametro.SE_UNIO_JUGADOR));
+						server.getSala(paqueteDatos.getIndice(),ec.persona);
 					}
 					server.agregarListaPersonas(persona);
 					server.agregarListaJugador(new Jugador(persona.getNick(), persona.getPuntaje()));

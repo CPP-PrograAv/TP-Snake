@@ -64,17 +64,11 @@ public class SalaEspera extends JFrame {
 		mensaje.setBounds(200, 40, 200, 60);
 		contentPane.add(mensaje);
 
-//		JLabel mj = new JLabel(tipoJuego);
-//		mj.setBounds(200,60, 200,60);
-//		contentPane.add(mj);
 
 		JLabel mensaje2 = new JLabel("Cantidad de Fruta:");
 		mensaje2.setBounds(200, 90, 200, 60);
 		contentPane.add(mensaje2);
 
-//		JLabel tf = new JLabel(tipoModoFruta);
-//		tf.setBounds(200,110, 200,60);
-//		contentPane.add(tf);
 
 		iniciar = new JButton("Iniciar");
 		iniciar.setBounds(250, 300, 80, 30);
@@ -142,9 +136,9 @@ public class SalaEspera extends JFrame {
 
 	public void agregarJugador(Persona persona) {
 		Vjugadores.add(new Jugador(persona.getNick(), persona.getPuntaje()));
-//		String[] nuevo = new String[0];
-//		nuevo[0] = persona.getNick();
-//		model.addRow(nuevo);
+		String[] nuevo = new String[0];
+		nuevo[0] = persona.getNick();
+		model.addRow(nuevo);
 	}
 
 	public void sacarJugador(Persona persona) {
