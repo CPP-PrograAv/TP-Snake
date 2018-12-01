@@ -10,7 +10,7 @@ public abstract class Medida {
 	public static final int LARGO_VENTANA = 600;
 	
 	public static final int SIZE_MATRIZ = 50;
-	public static final int FPS = 25; //FRAMES_PER_SECOND
+	public static final int FPS = 20; //FRAMES_PER_SECOND
 	public static final int SKIP_TICKS = 1000/FPS;
 	
 	public static final int SIZE = ANCHO/SIZE_MATRIZ;

@@ -3,6 +3,7 @@ package cliente;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import baseDeDatos.Persona;
 import medida.*;
@@ -67,8 +68,8 @@ public class Conexion {
 			salida.flush();
 			salida.writeObject(paqueteDatos);
 			boolean flag = (boolean) entrada.readObject();
-			System.out.println("FLAG "+ flag);
-			return  flag;
+			System.out.println("FLAG " + flag);
+			return flag;
 
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -99,12 +100,12 @@ public class Conexion {
 		return resp;
 	}
 
-	public ArrayList<SalaEspera> actualizarLobby(Mensaje paqueteDatos) {
+	public HashMap<Integer, SalaEspera> actualizarLobby(Mensaje paqueteDatos) {
 
 		try {
 			salida.flush();
 			salida.writeObject(paqueteDatos);
-			return (ArrayList<SalaEspera>) entrada.readObject();
+			return (HashMap<Integer, SalaEspera>) entrada.readObject();
 
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -137,6 +138,22 @@ public class Conexion {
 		}
 
 		return true;
+	}
+
+	public Integer obtenerIndiceSala() {
+//		Mensaje paqueteRecibido;
+		try {
+			salida.flush();
+			salida.writeObject(new Mensaje(Parametro.SOLICITAR_SALA));
+
+			int num = (int) entrada.readObject();
+//			return (int) paqueteRecibido.getDato();
+			return num;
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 }

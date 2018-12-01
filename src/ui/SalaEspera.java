@@ -13,6 +13,8 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListDataListener;
+import javax.swing.table.DefaultTableModel;
 
 import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.COUNT;
 
@@ -25,7 +27,6 @@ import cliente.Mensaje;
 import medida.Parametro;
 
 public class SalaEspera extends JFrame {
-	private static int cont = 0;
 	private JPanel contentPane;
 	private int numSala;
 	private int cantJugadores;
@@ -33,22 +34,16 @@ public class SalaEspera extends JFrame {
 	private JButton iniciar, salir;
 	private String nombreSala;
 	private ArrayList<Jugador> Vjugadores = new ArrayList<Jugador>();
-	private JList<String> nickJugadores;
 	private Conexion conexion;
+	private DefaultTableModel model;
 
-//	public static void main(String[] args) {
-//		
-//		Persona per = new Persona();
-//		per.setNick("hola");
-//		SalaEspera sala = new SalaEspera("hola", per);
-//		
-//	}
 
-	public SalaEspera(String nombreSala, Persona persona) {
+	public SalaEspera(String nombreSala, Persona persona,int numSala) {
 
 		super(nombreSala);
 		this.nombreSala = nombreSala;
-
+		
+		String[] encabezado = { "Nick" };
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 400);
@@ -63,15 +58,8 @@ public class SalaEspera extends JFrame {
 		players.setBounds(20, 10, 100, 20);
 		contentPane.add(players);
 
-		nickJugadores = new JList<>();
-		nickJugadores.setBounds(20, 40, 150, 200);
-		nickJugadores.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		contentPane.add(nickJugadores);
-
-		JLabel adm = new JLabel(persona.getNick());
-		adm.setBounds(20, 20, 80, 40);
-		nickJugadores.add(adm);
-
+		model = new DefaultTableModel(new Object[][] {}, encabezado);
+		
 		JLabel mensaje = new JLabel("Tipo de Juego:");
 		mensaje.setBounds(200, 40, 200, 60);
 		contentPane.add(mensaje);
@@ -99,7 +87,7 @@ public class SalaEspera extends JFrame {
 		Jugador jugador = new Jugador(persona.getNick(), persona.getPuntaje());
 		Vjugadores.add(jugador);
 
-		this.numSala = ++cont;
+		this.numSala = numSala;
 		this.cantJugadores++;
 
 		iniciar.addActionListener(new ActionListener() {
@@ -154,13 +142,13 @@ public class SalaEspera extends JFrame {
 
 	public void agregarJugador(Persona persona) {
 		Vjugadores.add(new Jugador(persona.getNick(), persona.getPuntaje()));
-		JLabel n = new JLabel(persona.getNick());
-		n.setBounds(20, 50, 80, 20);
-		nickJugadores.add(n);
+		String[] nuevo = new String[0];
+		nuevo[0] = persona.getNick();
+		model.addRow(nuevo);
 	}
 
 	public void sacarJugador(Persona persona) {
-		Vjugadores.remove(persona);
+		Vjugadores.remove(new Jugador(persona.getNick(), persona.getPuntaje()));
 		cantJugadores--;
 	}
 
@@ -176,5 +164,14 @@ public class SalaEspera extends JFrame {
 	public String getNombreSala() {
 		return nombreSala;
 	}
+
+	public int getNumSala() {
+		return numSala;
+	}
+
+	public void setNumSala(int numSala) {
+		this.numSala = numSala;
+	}
+	
 
 }

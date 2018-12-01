@@ -20,8 +20,6 @@ import medida.Medida;
 public class Juego extends JFrame implements Runnable {
 
 	private int ANCHO = Medida.ANCHO;
-	private ObjectInputStream entrada;
-	private ObjectOutputStream salida;
 	
 	/**
 	 * el ultimo parametro es el Id de la snake, lo hardcodie porque el idgeneral de
@@ -29,7 +27,7 @@ public class Juego extends JFrame implements Runnable {
 	 * snake
 	 */
 
-	private InputTeclado InputTeclado = new InputTeclado();
+	private InputTeclado inputTeclado;
 	private ArrayList<Jugador> jugadores = new ArrayList<>();
 	private JPanel contentPane, panelpuntaje;
 	private Tablero laminaJuego;
@@ -39,49 +37,9 @@ public class Juego extends JFrame implements Runnable {
 
 	public Juego(Jugador persona) {
 		super("Game");
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, Medida.ANCHO_VENTANA, Medida.LARGO_VENTANA);
-		this.setLocationRelativeTo(null);
-
-		contentPane = new JPanel();
-		contentPane.setBorder(null);
-		contentPane.setLayout(null);
-		this.setContentPane(contentPane);
-
-		this.persona = persona;
-
-		laminaJuego = new Tablero();
-		laminaJuego.setBounds(ANCHO / 4, 0, Medida.ANCHO_VENTANA, Medida.LARGO_VENTANA);
-		contentPane.add(laminaJuego);
-
-		JLabel titulo = new JLabel("SCORE");
-		titulo.setBounds(40, 5, 120, 40);
-		contentPane.add(titulo);
-
-		JLabel nombre = new JLabel("Nombre");
-		nombre.setBounds(5, 30, 100, 40);
-		contentPane.add(nombre);
-
-		JLabel puntaje = new JLabel("Puntos");
-		puntaje.setBounds(65, 30, 100, 40);
-		contentPane.add(puntaje);
-
-		panelpuntaje = new JPanel();
-		panelpuntaje.setBounds(5, 70, 120, 300);
-
-		lista = new JList<>();
-		lista.setBackground(Color.YELLOW);
-		panelpuntaje.add(lista);
-
-		scroll = new JScrollPane();
-		scroll.setViewportView(lista);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		panelpuntaje.add(scroll);
-
-		contentPane.add(panelpuntaje);
-		// seTFocusable para que maneje los inputs dentro del panel
-		this.addKeyListener(InputTeclado);
+		construirVentana();
+		inputTeclado = new InputTeclado();
+		this.addKeyListener(inputTeclado);
 		setFocusable(true);
 		setVisible(true);
 
@@ -89,6 +47,15 @@ public class Juego extends JFrame implements Runnable {
 		añadirJugador();
 		añadirJugadorBot(120, 300);
 
+	}
+
+	public Juego() {
+		super("Game");
+		construirVentana();
+	}
+	
+	public void agregarJugador(Jugador jugador) {
+		jugadores.add(jugador);
 	}
 
 	private void añadirJugador() {
@@ -113,7 +80,7 @@ public class Juego extends JFrame implements Runnable {
 		long sleepTime = 0;
 
 		while(true) {
-		laminaJuego.actualizar(InputTeclado.direccion);
+		laminaJuego.actualizar();
 		lista.setModel(modelList());
 
 		// FPS
@@ -163,5 +130,48 @@ public class Juego extends JFrame implements Runnable {
 		res = String.format("%1$-" + cantidadCaracteres + "s", cadenas[0]);
 		res += String.format("%0" + cantidadNumeros + "d", nume);
 		return res;
+	}
+	
+	private void construirVentana() {
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(100, 100, Medida.ANCHO_VENTANA, Medida.LARGO_VENTANA);
+		this.setLocationRelativeTo(null);
+
+		contentPane = new JPanel();
+		contentPane.setBorder(null);
+		contentPane.setLayout(null);
+		this.setContentPane(contentPane);
+
+		laminaJuego = new Tablero();
+		laminaJuego.setBounds(ANCHO / 4, 0, Medida.ANCHO_VENTANA, Medida.LARGO_VENTANA);
+		contentPane.add(laminaJuego);
+
+		JLabel titulo = new JLabel("SCORE");
+		titulo.setBounds(40, 5, 120, 40);
+		contentPane.add(titulo);
+
+		JLabel nombre = new JLabel("Nombre");
+		nombre.setBounds(5, 30, 100, 40);
+		contentPane.add(nombre);
+
+		JLabel puntaje = new JLabel("Puntos");
+		puntaje.setBounds(65, 30, 100, 40);
+		contentPane.add(puntaje);
+
+		panelpuntaje = new JPanel();
+		panelpuntaje.setBounds(5, 70, 120, 300);
+
+		lista = new JList<>();
+		lista.setBackground(Color.YELLOW);
+		panelpuntaje.add(lista);
+
+		scroll = new JScrollPane();
+		scroll.setViewportView(lista);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		panelpuntaje.add(scroll);
+
+		contentPane.add(panelpuntaje);
+		// seTFocusable para que maneje los inputs dentro del panel
+		setFocusable(true);
 	}
 }
