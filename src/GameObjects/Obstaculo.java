@@ -12,9 +12,9 @@ public class Obstaculo extends GameObject {
 	private ArrayList<Obstaculo> cuerpoObstaculo = new ArrayList<Obstaculo>();
 
 	
-	public Obstaculo() {
-		super(ubicar(), IdObstaculo);
-		int obstaculoCreceIzquierda = 1;
+	public Obstaculo(String tipoMapa, int hori, Punto p) {
+			super(p, IdObstaculo);
+/*		int obstaculoCreceIzquierda = 1;
 		int obstaculoCreceArriba = 1;
 		int obstaculoAcostado = (int)(Math.random()* 100);//genero un numero random para que el obstaculo sea horizontal o vertical
 		System.out.println(obstaculoAcostado);
@@ -48,7 +48,20 @@ public class Obstaculo extends GameObject {
 				else
 					break;
 			}
+		}*/
+		if(/*tipoMapa == "Escalera" && */hori == 1) {
+		for (int i = 1; i <= 8; i++) {
+			if(getPosX()+i < 50 ) //50 * 50 TAM de la matriz
+				cuerpoObstaculo.add(new Obstaculo(new Punto(getPosX()+i, getPosY()), IdObstaculo));
+			}
 		}
+		
+		if(/*tipoMapa == "Escalera" && */hori == 2) {
+			for (int i = 1; i <= 8; i++) {
+				if(getPosX()+i < 50 ) //50 * 50 TAM de la matriz
+					cuerpoObstaculo.add(new Obstaculo(new Punto(getPosX(), getPosY()+i), IdObstaculo));
+				}
+			}
 	}
 
 	public Obstaculo(Punto punto, int id) {

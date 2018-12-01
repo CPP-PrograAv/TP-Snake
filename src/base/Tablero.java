@@ -31,18 +31,54 @@ public class Tablero extends JPanel {
 	/**
 	 * Crea un escenario vacío
 	 */
-	public Tablero() {
+	public Tablero(String obs) {
 		setBackground(Color.WHITE);
-		agregarObstaculo();
+		agregarObstaculo(obs);
 		agregarFruta();
+		
 	}
 
 	/**
 	 * Agrego los obstaculos del tablero
 	 */
-	public void agregarObstaculo() {
-		for (int i = 0; i < 8; i++) {
-			obstaculos.add(new Obstaculo());
+	public void agregarObstaculo(String obs) {
+		if(obs == "Escalera") {
+			int horizontal = 1;
+			int desplazamiento = 10;
+			for (int i = 1; i < 4; i++) {
+				Punto p1 = new Punto(5 + desplazamiento *i,5 + desplazamiento*i);
+				obstaculos.add(new Obstaculo(obs, horizontal , p1));
+			}
+			horizontal++;//vertical
+			for (int i = 1; i < 4; i++) {
+				Punto p1 = new Punto(15 + desplazamiento*i ,5 + desplazamiento * i);
+				obstaculos.add(new Obstaculo(obs, horizontal,p1 ));
+			}
+		}
+		if(obs == "LetraT") {
+			
+			int desplazamiento = 5;
+			for (int i = 1; i < 4; i++) {
+				Punto p1 = new Punto(10 + desplazamiento*i, 20);
+				obstaculos.add(new Obstaculo(obs, 1 , p1));
+			}
+			for (int i = 1; i < 4; i++) {
+				Punto p1 = new Punto(23 ,15 + desplazamiento*i);
+				obstaculos.add(new Obstaculo(obs, 2,p1 ));
+			}
+		}	
+			
+		if(obs == "Cruz") {
+			
+			int desplazamiento = 10;
+			for (int i = 1; i < 4; i++) {
+				Punto p1 = new Punto(5 + desplazamiento*i, 25);
+				obstaculos.add(new Obstaculo(obs, 1 , p1));
+			}
+			for (int i = 1; i < 4; i++) {
+				Punto p1 = new Punto(25 ,2 + desplazamiento*i);
+				obstaculos.add(new Obstaculo(obs, 2,p1 ));
+			}
 		}
 	}
 

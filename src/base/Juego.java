@@ -2,8 +2,11 @@ package base;
 
 import java.awt.*;
 import java.util.*;
+import java.util.Timer;
+
 import javax.swing.*;
 
+import GameObjects.Obstaculo;
 import TecladoEvento.InputTeclado;
 import baseDeDatos.Persona;
 import medida.Medida;
@@ -25,8 +28,10 @@ public class Juego extends JFrame implements Runnable {
 	private JList<String> lista;
 	private JScrollPane scroll;
 	private Persona persona;
+	private JLabel time;
+	int segundos = 10;
 	
-	public Juego(Persona persona) {
+	public Juego(Persona persona, String obs, String juegoSeleccionado) {
 		super("Game");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +45,7 @@ public class Juego extends JFrame implements Runnable {
 
 		this.persona=persona;
 		
-		laminaJuego = new Tablero();
+		laminaJuego = new Tablero(obs);
 		laminaJuego.setBounds(ANCHO / 4, 0, Medida.ANCHO_VENTANA, Medida.LARGO_VENTANA);
 		contentPane.add(laminaJuego);
 
@@ -55,7 +60,16 @@ public class Juego extends JFrame implements Runnable {
 		JLabel puntaje = new JLabel("Puntos");
 		puntaje.setBounds(65, 30, 100, 40);
 		contentPane.add(puntaje);
-
+		
+		if(juegoSeleccionado == "Tiempo") {
+		//cont = 90;
+		time = new JLabel("Tiempo: " + 90);
+		time.setBounds(15, 400, 100, 40);
+		contentPane.add(time);
+			Reloj relo =  new Reloj();
+			new Thread(relo).start();
+		}
+		
 		panelpuntaje = new JPanel();
 		panelpuntaje.setBounds(5, 70, 120, 300);
 
@@ -105,13 +119,14 @@ public class Juego extends JFrame implements Runnable {
 		// FPS
 		long nextGameTick = System.currentTimeMillis();
 		long sleepTime = 0;
-
+		
 		while (true) {
 			/*
 			 * Actualizar llama a move del Escenario, y repaint.
 			 */
 			laminaJuego.actualizar(InputTeclado.direccion);
 			lista.setModel(modelList());
+			
 			// FPS
 			nextGameTick += Medida.SKIP_TICKS;
 			sleepTime = nextGameTick - System.currentTimeMillis();
@@ -160,4 +175,29 @@ public class Juego extends JFrame implements Runnable {
 		res += String.format("%0" + cantidadNumeros + "d", nume);
 		return res;
 	}
+	
+	
+	class Reloj implements Runnable{
+
+		Thread h1;
+
+		@Override
+		public void run() {
+			//Thread aux =  Thread.currentThread();
+			while(segundos>0) {
+				segundos--;
+				try {
+					System.out.println("segundos: " + segundos);
+					time.setText("Tiempo: " + segundos );
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();	
+				}
+				
+			}
+			JOptionPane.showMessageDialog(null, "SE ACABO EL TIEMPO", "fin del juego",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
+	}	
 }
